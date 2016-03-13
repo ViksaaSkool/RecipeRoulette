@@ -96,7 +96,24 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
+    /* Support */
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:support-annotations:23.1.1'
+
+    /* Retrofit 2.0 */
+    compile 'com.google.code.gson:gson:2.6.1'
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:okhttp:3.1.2'
+
+    /* RxAndroid + RxJava */
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.0'
+
+    /* ButterKnife */
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    /* Dagger */
+    provided 'com.squareup.dagger:dagger-compiler:1.2.1'
 }
