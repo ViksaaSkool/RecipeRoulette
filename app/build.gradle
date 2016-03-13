@@ -9,19 +9,94 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
+
+    signingConfigs {
+        release {
+            storeFile file("..${File.separator}keystore${File.separator}keystore.jks")
+            storePassword "!recIpeRou1ett#"
+            keyAlias "recipe_roulette"
+            keyPassword "!recIpeRou1ett#"
+        }
+    }
+
+
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            zipAlignEnabled true
+            buildConfigField "String", "FOOD_2_FORK_API_KEY", getLocalProperty('food2ForkAPIKEY_PROD')
         }
+        debug {
+            //debug the obfuscation if needed
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+            versionNameSuffix "-debug->" + "build-date:" + getTimeStamp()
+            signingConfig signingConfigs.release
+            buildConfigField "String", "FOOD_2_FORK_API_KEY", getLocalProperty('food2ForkAPIKEY_DEV')
+
+        }
+    }
+}
+
+/* helper methods */
+
+def getLocalProperty(propertyName) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty(propertyName, null)
+}
+
+def getTimeStamp() {
+    def date = new Date()
+    def formattedDate = date.format('ddMMyyyy')
+    return formattedDate
+}
+
+def releasePath = file("${rootDir}/apk-builds/")
+def archiveBaseName = android.defaultConfig.applicationId + "-" + android.defaultConfig.versionCode + "-" + getTimeStamp()
+
+android.applicationVariants.all { variant ->
+    if (variant.buildType.name == 'release') {
+        def build = variant.name.capitalize()
+        def releaseBuildTask = tasks.create(name: "buildSignedAPK", type: Zip) {
+            group 'Build'
+            description "Build signed APK"
+            destinationDir releasePath
+            archiveName archiveBaseName + ".zip"
+            from(variant.outputs.outputFile.path) {
+                rename '.*', "${archiveBaseName}.apk"
+            }
+            if (variant.buildType.minifyEnabled) {
+                from(variant.mappingFile.parent) {
+                    include 'mapping.txt'
+                    rename '(.*)', "${archiveBaseName}-\$1"
+                }
+            }
+        }
+        releaseBuildTask.dependsOn variant.assemble
+    }
+}
+
+
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://jitpack.io"
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:support-annotations:23.1.1'
 }
