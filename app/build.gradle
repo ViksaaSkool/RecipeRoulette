@@ -15,9 +15,10 @@ android {
     signingConfigs {
         release {
             storeFile file("..${File.separator}keystore${File.separator}keystore.jks")
-            storePassword "!recIpeRou1ett#"
-            keyAlias "recipe_roulette"
-            keyPassword "!recIpeRou1ett#"
+            storePassword getLocalProperty('storePassword')
+            keyAlias getLocalProperty('keyAlias')
+            keyPassword getLocalProperty('keyPassword')
+
         }
     }
 
@@ -37,7 +38,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable true
             versionNameSuffix "-debug->" + "build-date:" + getTimeStamp()
-            signingConfig signingConfigs.release
             buildConfigField "String", "FOOD_2_FORK_API_KEY", getLocalProperty('food2ForkAPIKEY_DEV')
 
         }
