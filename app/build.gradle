@@ -22,7 +22,6 @@ android {
         }
     }
 
-
     buildTypes {
         release {
             debuggable false
@@ -43,8 +42,6 @@ android {
         }
     }
 }
-
-/* helper methods */
 
 def getLocalProperty(propertyName) {
     Properties properties = new Properties()
