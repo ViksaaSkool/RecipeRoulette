@@ -1,6 +1,7 @@
 package com.recipe.roulette.app.view.activity;
 
 import com.recipe.roulette.app.R;
+import com.recipe.roulette.app.helpers.ChangeActivityHelper;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
 
@@ -22,5 +23,7 @@ public class SplashScreenActivity extends AwesomeSplash {
     @Override
     public void animationsFinished() {
 
+        //set the main activity
+        ChangeActivityHelper.changeActivity(this, MainActivity.class, true);
     }
 }

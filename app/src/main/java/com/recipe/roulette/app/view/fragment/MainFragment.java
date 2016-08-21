@@ -29,6 +29,10 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
         // Required empty public constructor
     }
 
+    public static MainFragment newInstance() {
+        return new MainFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_custom, container, false);
