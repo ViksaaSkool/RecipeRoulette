@@ -1,14 +1,28 @@
 package com.recipe.roulette.app;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
-/**
- * Created by varsovski on 12-Mar-16.
- */
-public class RecipeRouletteApplication extends Application {
+import com.recipe.roulette.app.injection.AppComponent;
+import com.recipe.roulette.app.injection.AppModule;
+import com.recipe.roulette.app.injection.DaggerAppComponent;
+
+public final class RecipeRouletteApplication extends Application {
+    private AppComponent mAppComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+
+        mAppComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .build();
+    }
+
+    @NonNull
+    public AppComponent getAppComponent() {
+        return mAppComponent;
     }
 }

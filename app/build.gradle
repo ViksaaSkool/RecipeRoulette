@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'android-apt'
+
 
 android {
     compileSdkVersion 24
@@ -112,9 +114,10 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
 
-    /* Dagger */
-    compile 'com.google.dagger:dagger:2.0'
-    apt 'com.google.dagger:dagger-compiler:2.0'
+    /* Dagger 2.0 */
+    apt 'com.google.dagger:dagger-compiler:2.5'
+    compile 'com.google.dagger:dagger:2.5'
+    provided 'javax.annotation:jsr250-api:1.0'
 
     /* Awesome Splash */
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
