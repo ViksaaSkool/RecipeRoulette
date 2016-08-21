@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         applicationId "com.recipe.roulette.app"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0.0"
     }
@@ -36,7 +37,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable true
-            versionNameSuffix "-debug->" + "build-date:" + getTimeStamp()
+            versionNameSuffix "_debug_" + getTimeStamp()
             buildConfigField "String", "FOOD_2_FORK_API_KEY", getLocalProperty('food2ForkAPIKEY_DEV')
 
         }
@@ -51,7 +52,7 @@ def getLocalProperty(propertyName) {
 
 def getTimeStamp() {
     def date = new Date()
-    def formattedDate = date.format('ddMMyyyy')
+    def formattedDate = date.format('dd.MM.yyyy')
     return formattedDate
 }
 
@@ -94,12 +95,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     /* Support */
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:support-annotations:23.1.1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:support-annotations:24.1.1'
 
     /* Retrofit 2.0 */
-    compile 'com.google.code.gson:gson:2.6.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
@@ -109,8 +109,13 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
 
     /* ButterKnife */
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton:butterknife:8.1.0'
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
 
     /* Dagger */
-    provided 'com.squareup.dagger:dagger-compiler:1.2.1'
+    compile 'com.google.dagger:dagger:2.0'
+    apt 'com.google.dagger:dagger-compiler:2.0'
+
+    /* Awesome Splash */
+    compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
 }
