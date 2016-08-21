@@ -1,5 +1,7 @@
-package com.recipe.roulette.app.injection;
+package com.recipe.roulette.app.injection.component;
 
+import com.recipe.roulette.app.injection.module.CustomViewModule;
+import com.recipe.roulette.app.injection.scope.FragmentScope;
 import com.recipe.roulette.app.view.fragment.MainFragment;
 
 import dagger.Component;

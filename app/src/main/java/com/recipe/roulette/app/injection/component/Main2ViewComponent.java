@@ -1,5 +1,7 @@
-package com.recipe.roulette.app.injection;
+package com.recipe.roulette.app.injection.component;
 
+import com.recipe.roulette.app.injection.module.Main2ViewModule;
+import com.recipe.roulette.app.injection.scope.ActivityScope;
 import com.recipe.roulette.app.view.activity.MainActivity;
 
 import dagger.Component;

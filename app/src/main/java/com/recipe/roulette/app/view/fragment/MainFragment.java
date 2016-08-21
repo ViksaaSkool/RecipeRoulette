@@ -11,8 +11,8 @@ import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.view.CustomView;
 import com.recipe.roulette.app.presenter.loader.PresenterFactory;
 import com.recipe.roulette.app.presenter.CustomPresenter;
-import com.recipe.roulette.app.injection.AppComponent;
-import com.recipe.roulette.app.injection.CustomViewModule;
+import com.recipe.roulette.app.injection.component.AppComponent;
+import com.recipe.roulette.app.injection.module.CustomViewModule;
 import com.recipe.roulette.app.injection.DaggerCustomViewComponent;
 import com.recipe.roulette.app.view.impl.BaseFragment;
 

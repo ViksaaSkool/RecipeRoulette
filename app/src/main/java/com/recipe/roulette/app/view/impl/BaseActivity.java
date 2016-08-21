@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.presenter.loader.PresenterFactory;
 import com.recipe.roulette.app.presenter.loader.PresenterLoader;
-import com.recipe.roulette.app.injection.AppComponent;
+import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.presenter.BasePresenter;
 
 import java.util.concurrent.atomic.AtomicBoolean;

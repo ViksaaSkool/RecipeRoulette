@@ -1,8 +1,9 @@
-package com.recipe.roulette.app.injection;
+package com.recipe.roulette.app.injection.component;
 
 import android.content.Context;
 
 import com.recipe.roulette.app.RecipeRouletteApplication;
+import com.recipe.roulette.app.injection.module.AppModule;
 
 import javax.inject.Singleton;
 

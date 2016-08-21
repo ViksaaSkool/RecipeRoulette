@@ -1,4 +1,4 @@
-package com.recipe.roulette.app.injection;
+package com.recipe.roulette.app.injection.module;
 
 import android.support.annotation.NonNull;
 

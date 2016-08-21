@@ -7,8 +7,8 @@ import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.view.Main2View;
 import com.recipe.roulette.app.presenter.loader.PresenterFactory;
 import com.recipe.roulette.app.presenter.Main2Presenter;
-import com.recipe.roulette.app.injection.AppComponent;
-import com.recipe.roulette.app.injection.Main2ViewModule;
+import com.recipe.roulette.app.injection.component.AppComponent;
+import com.recipe.roulette.app.injection.module.Main2ViewModule;
 import com.recipe.roulette.app.injection.DaggerMain2ViewComponent;
 import com.recipe.roulette.app.view.impl.BaseActivity;
 
