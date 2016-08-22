@@ -1,7 +1,11 @@
 package com.recipe.roulette.app.injection.module;
 
+import dagger.Module;
+
 /**
  * Created by varsovski on 21-Aug-16.
  */
-public class NetworkModule {
+
+@Module
+public  final class NetworkModule {
 }

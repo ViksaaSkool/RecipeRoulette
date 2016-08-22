@@ -4,8 +4,8 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 
 import com.recipe.roulette.app.injection.component.AppComponent;
+import com.recipe.roulette.app.injection.component.DaggerAppComponent;
 import com.recipe.roulette.app.injection.module.AppModule;
-import com.recipe.roulette.app.injection.DaggerAppComponent;
 
 public final class RecipeRouletteApplication extends Application {
     private AppComponent mAppComponent;

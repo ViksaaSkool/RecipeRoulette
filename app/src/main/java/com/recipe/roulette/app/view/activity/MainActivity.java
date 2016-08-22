@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.recipe.roulette.app.R;
-import com.recipe.roulette.app.view.Main2View;
-import com.recipe.roulette.app.presenter.loader.PresenterFactory;
-import com.recipe.roulette.app.presenter.Main2Presenter;
 import com.recipe.roulette.app.injection.component.AppComponent;
+import com.recipe.roulette.app.injection.component.DaggerMain2ViewComponent;
 import com.recipe.roulette.app.injection.module.Main2ViewModule;
-import com.recipe.roulette.app.injection.DaggerMain2ViewComponent;
+import com.recipe.roulette.app.presenter.Main2Presenter;
+import com.recipe.roulette.app.presenter.loader.PresenterFactory;
+import com.recipe.roulette.app.view.Main2View;
 import com.recipe.roulette.app.view.impl.BaseActivity;
 
 import javax.inject.Inject;
@@ -28,6 +28,11 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
 
         // Your code here
         // Do not call mPresenter from here, it will be null! Wait for onStart or onPostCreate.
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override

@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.recipe.roulette.app.R;
-import com.recipe.roulette.app.view.CustomView;
-import com.recipe.roulette.app.presenter.loader.PresenterFactory;
-import com.recipe.roulette.app.presenter.CustomPresenter;
 import com.recipe.roulette.app.injection.component.AppComponent;
+import com.recipe.roulette.app.injection.component.DaggerCustomViewComponent;
 import com.recipe.roulette.app.injection.module.CustomViewModule;
-import com.recipe.roulette.app.injection.DaggerCustomViewComponent;
+import com.recipe.roulette.app.presenter.CustomPresenter;
+import com.recipe.roulette.app.presenter.loader.PresenterFactory;
+import com.recipe.roulette.app.view.CustomView;
 import com.recipe.roulette.app.view.impl.BaseFragment;
 
 import javax.inject.Inject;
