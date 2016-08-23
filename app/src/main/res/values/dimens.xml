@@ -5,4 +5,10 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="bottom_navigation_elevation">8dp</dimen>
     <dimen name="navigation_bar_height">48dp</dimen>
+
+
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="title_h1">50sp</dimen>
+    <dimen name="title_h2">30sp</dimen>
+
 </resources>

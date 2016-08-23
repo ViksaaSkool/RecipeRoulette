@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Recipe Roulette</string>
     <string name="action_settings">Settings</string>
+
+    <string name="dummy_title">Dummy Title</string>
+    <string name="dummy_subtitle">Dummy Subtitle</string>
 </resources>
