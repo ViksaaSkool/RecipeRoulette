@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:fontFamily="sans-serif-condensed"
-            android:text="@string/dummy_title"
+            android:text="@string/title_dummy"
             android:textColor="@android:color/white"
             android:textSize="@dimen/title_h1"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_marginRight="@dimen/text_margin"
             android:fontFamily="sans-serif-condensed"
-            android:text="@string/dummy_subtitle"
+            android:text="@string/subtitle_dummy"
             android:textColor="@android:color/white"
             android:textSize="@dimen/title_h2"
             android:textStyle="bold" />

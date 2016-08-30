@@ -2,6 +2,13 @@
     <string name="app_name">Recipe Roulette</string>
     <string name="action_settings">Settings</string>
 
-    <string name="dummy_title">Dummy Title</string>
-    <string name="dummy_subtitle">Dummy Subtitle</string>
+    <string name="title_dummy">Dummy Title</string>
+    <string name="subtitle_dummy">Dummy Subtitle</string>
+
+    <!-- FragmentCustom -->
+    <string name="hint_search">Enter your keyword&#8230;</string>
+    <string name="action_search">Search</string>
+    <string name="title_list">Recipe List</string>
+    <string name="title_swipe">Recipe Swipe</string>
+
 </resources>
