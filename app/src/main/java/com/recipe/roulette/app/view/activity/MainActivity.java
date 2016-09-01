@@ -19,6 +19,7 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     @Inject
     PresenterFactory<Main2Presenter> mPresenterFactory;
 
+
     // Your presenter is available using the mPresenter variable
 
     @Override

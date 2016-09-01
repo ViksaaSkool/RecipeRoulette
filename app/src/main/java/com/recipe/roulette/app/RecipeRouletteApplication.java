@@ -9,6 +9,7 @@ import com.recipe.roulette.app.injection.module.AppModule;
 
 public final class RecipeRouletteApplication extends Application {
     private AppComponent mAppComponent;
+    //private NetComponent mNetComponent;
 
     @Override
     public void onCreate() {
