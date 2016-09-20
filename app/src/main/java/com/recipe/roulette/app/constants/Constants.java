@@ -16,6 +16,11 @@ public class Constants {
     public static final String API_TAG = "APITAG";
 
     //CACHE KEYS
+    public static final String LAYOUT_KEY = "layout_key";
+
+    //VALUES
+    public static final int CARDS_LIST_VIEW = 0;
+    public static final int CUSTOM_VIEW = 1;
 
     //UI
 }
