@@ -25,41 +25,40 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
-    // Dagger will only look for methods annotated with @Provides
     @Provides
     @Singleton
     // Application reference must come from AppModule.class
-    public SharedPreferences providesSharedPreferences(Application application) {
+    SharedPreferences providesSharedPreferences(Application application) {
         return PreferenceManager.getDefaultSharedPreferences(application);
     }
 
     @Provides
     @Singleton
-    public Cache provideOkHttpCache(Application application) {
+    Cache provideOkHttpCache(Application application) {
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
         return new Cache(application.getCacheDir(), cacheSize);
     }
 
     @Provides
     @Singleton
-    public Gson provideGson() {
+    Gson provideGson() {
         return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient(Cache cache) {
+    OkHttpClient provideOkHttpClient(Cache cache) {
         return new OkHttpClient().newBuilder().cache(cache).build();
     }
 
+
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(Constants.BASE_F2F_URL)
                 .client(okHttpClient)
                 .build();
     }
-
 }

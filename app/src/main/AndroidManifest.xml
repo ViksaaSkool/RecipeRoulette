@@ -29,6 +29,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.MainActivity" />
+
+        <meta-data
+            android:name="com.recipe.roulette.app.miscellaneous.MyGlideModule"
+            android:value="GlideModule" />
+
     </application>
 
 </manifest>

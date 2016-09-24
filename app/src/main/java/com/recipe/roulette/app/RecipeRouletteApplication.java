@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerAppComponent;
 import com.recipe.roulette.app.injection.module.AppModule;
+import com.recipe.roulette.app.injection.module.NetworkModule;
 
 public final class RecipeRouletteApplication extends Application {
     private AppComponent mAppComponent;
@@ -16,6 +17,7 @@ public final class RecipeRouletteApplication extends Application {
 
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .networkModule(new NetworkModule())
                 .build();
     }
 
