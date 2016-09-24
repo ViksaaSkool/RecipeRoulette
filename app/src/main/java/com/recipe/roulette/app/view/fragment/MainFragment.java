@@ -23,6 +23,7 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
     @Inject
     PresenterFactory<CustomPresenter> mPresenterFactory;
 
+
     // Your presenter is available using the mPresenter variable
 
     public MainFragment() {
@@ -44,6 +45,7 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
 
         // Your code here
         // Do not call mPresenter from here, it will be null! Wait for onStart
+
     }
 
     @Override
@@ -53,6 +55,7 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
                 .customViewModule(new CustomViewModule())
                 .build()
                 .inject(this);
+
     }
 
     @NonNull

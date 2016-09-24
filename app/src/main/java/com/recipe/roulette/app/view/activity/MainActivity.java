@@ -18,14 +18,16 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
 
     @Inject
     PresenterFactory<Main2Presenter> mPresenterFactory;
-
-
     // Your presenter is available using the mPresenter variable
+
+    /*@Inject
+    SharedPreferences sharedPreferences;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
 
         // Your code here
         // Do not call mPresenter from here, it will be null! Wait for onStart or onPostCreate.
@@ -34,15 +36,27 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     @Override
     protected void onStart() {
         super.onStart();
+
+
     }
 
     @Override
     protected void setupComponent(@NonNull AppComponent parentComponent) {
+
         DaggerMain2ViewComponent.builder()
                 .appComponent(parentComponent)
                 .main2ViewModule(new Main2ViewModule())
                 .build()
                 .inject(this);
+
+        /*DaggerNetworkComponent.builder()
+                .appComponent(parentComponent)
+                .networkModule(new NetworkModule())
+                .build()
+                .inject(this);*/
+
+       //parentComponent.getApp().getAppComponent().inject(this);
+
     }
 
     @NonNull

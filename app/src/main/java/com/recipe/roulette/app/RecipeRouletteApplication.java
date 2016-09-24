@@ -9,13 +9,10 @@ import com.recipe.roulette.app.injection.module.AppModule;
 
 public final class RecipeRouletteApplication extends Application {
     private AppComponent mAppComponent;
-    //private NetComponent mNetComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-
 
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
@@ -26,4 +23,5 @@ public final class RecipeRouletteApplication extends Application {
     public AppComponent getAppComponent() {
         return mAppComponent;
     }
+
 }
