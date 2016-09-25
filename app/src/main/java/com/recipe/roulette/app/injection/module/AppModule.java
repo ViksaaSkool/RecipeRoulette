@@ -28,4 +28,5 @@ public final class AppModule {
     public RecipeRouletteApplication provideApp() {
         return mApp;
     }
+
 }

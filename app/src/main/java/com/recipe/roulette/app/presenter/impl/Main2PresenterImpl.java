@@ -2,9 +2,9 @@ package com.recipe.roulette.app.presenter.impl;
 
 import android.support.annotation.NonNull;
 
+import com.recipe.roulette.app.interactor.Main2Interactor;
 import com.recipe.roulette.app.presenter.Main2Presenter;
 import com.recipe.roulette.app.view.Main2View;
-import com.recipe.roulette.app.interactor.Main2Interactor;
 
 import javax.inject.Inject;
 
@@ -12,6 +12,8 @@ public final class Main2PresenterImpl extends BasePresenterImpl<Main2View> imple
     /**
      * The interactor
      */
+
+
     @NonNull
     private final Main2Interactor mInteractor;
 
@@ -25,6 +27,7 @@ public final class Main2PresenterImpl extends BasePresenterImpl<Main2View> imple
     @Override
     public void onStart(boolean firstStart) {
         super.onStart(firstStart);
+
 
         // Your code here. Your view is available using mView and will not be null until next onStop()
     }

@@ -1,12 +1,12 @@
 package com.recipe.roulette.app.injection.module;
 
-import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.constants.Constants;
 
 import javax.inject.Singleton;
@@ -27,14 +27,13 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    // Application reference must come from AppModule.class
-    SharedPreferences providesSharedPreferences(Application application) {
+    SharedPreferences providesSharedPreferences(RecipeRouletteApplication application) {
         return PreferenceManager.getDefaultSharedPreferences(application);
     }
 
     @Provides
     @Singleton
-    Cache provideOkHttpCache(Application application) {
+    Cache provideOkHttpCache(RecipeRouletteApplication application) {
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
         return new Cache(application.getCacheDir(), cacheSize);
     }

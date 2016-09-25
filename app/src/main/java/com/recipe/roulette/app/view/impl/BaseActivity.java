@@ -58,6 +58,7 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
 
     private void injectDependencies() {
         setupComponent(((RecipeRouletteApplication) getApplication()).getAppComponent());
+
     }
 
     @Override

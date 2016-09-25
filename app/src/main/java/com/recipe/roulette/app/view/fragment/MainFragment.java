@@ -1,11 +1,13 @@
 package com.recipe.roulette.app.view.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.injection.component.AppComponent;
@@ -23,6 +25,9 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
     @Inject
     PresenterFactory<CustomPresenter> mPresenterFactory;
 
+
+    @Inject
+    SharedPreferences mSharedPreferences;
 
     // Your presenter is available using the mPresenter variable
 
@@ -45,6 +50,13 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
 
         // Your code here
         // Do not call mPresenter from here, it will be null! Wait for onStart
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Toast.makeText(getContext(), mSharedPreferences.getString("H", "ERROR"), Toast.LENGTH_LONG).show();
 
     }
 
