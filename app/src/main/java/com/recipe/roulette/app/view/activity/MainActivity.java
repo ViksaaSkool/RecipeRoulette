@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.recipe.roulette.app.R;
+import com.recipe.roulette.app.api.Food2ForkApi;
 import com.recipe.roulette.app.helpers.ChangeFragmentHelper;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerMain2ViewComponent;
@@ -44,6 +45,7 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
         editor.apply();
         ChangeFragmentHelper.setMainFragment(this, R.id.main_fragment);
 
+        Food2ForkApi.getInstance().searchForRecipes("banana");
     }
 
     @Override
@@ -53,6 +55,8 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
                 .main2ViewModule(new Main2ViewModule())
                 .build()
                 .inject(this);
+
+
     }
 
     @NonNull

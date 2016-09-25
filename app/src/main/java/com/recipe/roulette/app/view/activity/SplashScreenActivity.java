@@ -3,6 +3,7 @@ package com.recipe.roulette.app.view.activity;
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.helpers.ChangeActivityHelper;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
+import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
 
 /**
@@ -15,6 +16,7 @@ public class SplashScreenActivity extends AwesomeSplash {
 
         configSplash.setBackgroundColor(R.color.colorPrimary);
         configSplash.setLogoSplash(R.drawable.splash_logo);
+        configSplash.setRevealFlagX(Flags.REVEAL_LEFT);
 
         configSplash.setTitleSplash("");
         configSplash.setAnimTitleDuration(0);

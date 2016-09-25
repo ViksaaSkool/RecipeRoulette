@@ -15,6 +15,7 @@ import com.recipe.roulette.app.injection.component.DaggerCustomViewComponent;
 import com.recipe.roulette.app.injection.module.CustomViewModule;
 import com.recipe.roulette.app.presenter.CustomPresenter;
 import com.recipe.roulette.app.presenter.loader.PresenterFactory;
+import com.recipe.roulette.app.util.ToastUtil;
 import com.recipe.roulette.app.view.CustomView;
 import com.recipe.roulette.app.view.impl.BaseFragment;
 
@@ -56,7 +57,7 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
     @Override
     public void onStart() {
         super.onStart();
-        Toast.makeText(getContext(), mSharedPreferences.getString("H", "ERROR"), Toast.LENGTH_LONG).show();
+        ToastUtil.showToast(mSharedPreferences.getString("H", "ERROR"), Toast.LENGTH_SHORT);
 
     }
 

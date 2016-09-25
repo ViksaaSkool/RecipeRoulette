@@ -60,4 +60,19 @@ public class NetworkModule {
                 .client(okHttpClient)
                 .build();
     }
+
+
+    //API Calls
+
+    /*public interface Food2ForkApiInterface {
+        @GET(Constants.SEARCH_RECIPES)
+        Call<ArrayList<Recipe>> searchForRecipes(@Field(Constants.KEY_PARAM) String key,
+                                                 @Field(Constants.QUERY_PARAM) String query);
+    }
+
+    @Provides
+    @PerApp // needs to be consistent with the component scope
+    public Food2ForkApiInterface providesFood2ForkApiInterface(Retrofit retrofit) {
+        return retrofit.create(Food2ForkApiInterface.class);
+    }*/
 }
