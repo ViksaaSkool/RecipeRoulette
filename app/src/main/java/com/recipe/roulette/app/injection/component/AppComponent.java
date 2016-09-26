@@ -29,7 +29,9 @@ public interface AppComponent {
 
     SharedPreferences sharedPreferences();
 
+    Food2ForkAPIModule.Food2ForkApiInterface food2ForkApiInterface();
+
+    Food2ForkApi food2ForkApi();
 
     void inject(RecipeRouletteApplication recipeRouletteApplication);
-    void inject(Food2ForkApi food2ForkApi);
 }
