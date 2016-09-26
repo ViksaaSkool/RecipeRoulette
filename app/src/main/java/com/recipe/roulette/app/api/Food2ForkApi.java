@@ -1,15 +1,10 @@
 package com.recipe.roulette.app.api;
 
-import android.content.Context;
-
 import com.recipe.roulette.app.BuildConfig;
-import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.constants.Constants;
 import com.recipe.roulette.app.injection.module.Food2ForkAPIModule;
 import com.recipe.roulette.app.model.RecipesSearchResponse;
 import com.recipe.roulette.app.util.LogUtil;
-
-import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,28 +16,12 @@ import retrofit2.Response;
 
 public class Food2ForkApi {
 
-    @Inject
-    Context mContext;
-    @Inject
-    Food2ForkAPIModule.Food2ForkApiInterface mFood2ForkApiInterface;
-    private static Food2ForkApi mInstance;
-
     //retrofit call
+    private Food2ForkAPIModule.Food2ForkApiInterface mFood2ForkApiInterface;
     private Call mCall;
 
-    private Food2ForkApi() {
-        RecipeRouletteApplication.getAppComponent().inject(this);
-    }
-
-    public static Food2ForkApi createInstance() {
-        if (null == mInstance) {
-            mInstance = new Food2ForkApi();
-        }
-        return mInstance;
-    }
-
-    public static Food2ForkApi getInstance() {
-        return mInstance;
+    public Food2ForkApi(Food2ForkAPIModule.Food2ForkApiInterface food2ForkApiInterface){
+        this.mFood2ForkApiInterface = food2ForkApiInterface;
     }
 
     /* Service calls */

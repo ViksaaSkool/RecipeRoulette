@@ -1,5 +1,6 @@
 package com.recipe.roulette.app.injection.module;
 
+import com.recipe.roulette.app.api.Food2ForkApi;
 import com.recipe.roulette.app.constants.Constants;
 import com.recipe.roulette.app.model.RecipesSearchResponse;
 
@@ -29,6 +30,13 @@ public class Food2ForkAPIModule {
     @Singleton // needs to be consistent with the component scope
     public Food2ForkApiInterface providesFood2ForkApiInterface(Retrofit retrofit) {
         return retrofit.create(Food2ForkApiInterface.class);
+    }
+
+
+    @Provides
+    @Singleton // needs to be consistent with the component scope
+    public Food2ForkApi providesFood2ForkApi(Food2ForkApiInterface food2ForkApiInterface) {
+        return new Food2ForkApi (food2ForkApiInterface);
     }
 
 }

@@ -26,6 +26,9 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     @Inject
     SharedPreferences mSharedPreferences;
 
+    @Inject
+    Food2ForkApi mFood2ForkApi;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,9 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
         editor.apply();
         ChangeFragmentHelper.setMainFragment(this, R.id.main_fragment);
 
-        Food2ForkApi.getInstance().searchForRecipes("banana");
+        if (mFood2ForkApi != null)
+            mFood2ForkApi.searchForRecipes("banana");
+
     }
 
     @Override
