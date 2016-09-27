@@ -43,6 +43,13 @@
             android:textOff="@string/title_list"
             android:textOn="@string/title_swipe" />
 
+        <ImageView
+            android:id="@+id/loading_image_view"
+            android:layout_width="@dimen/loading__size"
+            android:layout_height="@dimen/loading__size"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="@dimen/fab_margin" />
+
     </LinearLayout>
 
 

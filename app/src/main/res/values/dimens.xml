@@ -14,5 +14,6 @@
     <dimen name="title_list_h2">15sp</dimen>
 
     <dimen name="card_radius">8dp</dimen>
+    <dimen name="loading__size">64dp</dimen>
 
 </resources>

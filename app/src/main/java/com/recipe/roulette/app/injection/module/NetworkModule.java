@@ -3,6 +3,8 @@ package com.recipe.roulette.app.injection.module;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -61,18 +63,10 @@ public class NetworkModule {
                 .build();
     }
 
-
-    //API Calls
-
-    /*public interface Food2ForkApiInterface {
-        @GET(Constants.SEARCH_RECIPES)
-        Call<ArrayList<Recipe>> searchForRecipes(@Field(Constants.KEY_PARAM) String key,
-                                                 @Field(Constants.QUERY_PARAM) String query);
+    @Provides
+    @Singleton
+    RequestManager provideGlide(RecipeRouletteApplication application){
+        return Glide.with(application);
     }
 
-    @Provides
-    @PerApp // needs to be consistent with the component scope
-    public Food2ForkApiInterface providesFood2ForkApiInterface(Retrofit retrofit) {
-        return retrofit.create(Food2ForkApiInterface.class);
-    }*/
 }

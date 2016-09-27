@@ -7,8 +7,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.RequestManager;
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerCustomViewComponent;
@@ -21,6 +23,9 @@ import com.recipe.roulette.app.view.impl.BaseFragment;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public final class MainFragment extends BaseFragment<CustomPresenter, CustomView> implements CustomView {
 
     @Inject
@@ -30,6 +35,10 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
     @Inject
     SharedPreferences mSharedPreferences;
 
+    @Inject
+    RequestManager mGlide;
+    @BindView(R.id.loading_image_view)
+    ImageView mLoadingImageView;
     // Your presenter is available using the mPresenter variable
 
     public MainFragment() {
@@ -42,7 +51,9 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_custom, container, false);
+        View view = inflater.inflate(R.layout.fragment_custom, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -58,6 +69,8 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
     public void onStart() {
         super.onStart();
         ToastUtil.showToast(mSharedPreferences.getString("H", "ERROR"), Toast.LENGTH_SHORT);
+
+        mGlide.load(R.drawable.loading).into(mLoadingImageView);
 
     }
 
