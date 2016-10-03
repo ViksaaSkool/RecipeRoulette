@@ -11,4 +11,8 @@
     <string name="title_list">Recipe List</string>
     <string name="title_swipe">Recipe Swipe</string>
 
+
+    <string name="notification_no_results">No Search Results. Try Again!</string>
+
+
 </resources>

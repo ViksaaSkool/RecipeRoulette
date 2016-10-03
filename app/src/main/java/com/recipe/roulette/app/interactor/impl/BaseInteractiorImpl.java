@@ -7,11 +7,4 @@ import com.recipe.roulette.app.interactor.BaseInteractor;
  */
 
 public class BaseInteractiorImpl implements BaseInteractor {
-
-    /*@Inject
-    SharedPreferences mSharedPreferences;
-
-    public BaseInteractiorImpl() {
-        RecipeRouletteApplication.getAppComponent().inject(this);
-    }*/
 }

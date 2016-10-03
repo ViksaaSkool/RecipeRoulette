@@ -14,13 +14,15 @@ public class Constants {
 
     //LOG TAGS
     public static final String API_TAG = "APITAG";
+    public static final String UI_TAG = "UITAG";
+    public static final String APP_TAG = "APPTAG";
 
     //CACHE KEYS
     public static final String LAYOUT_KEY = "layout_key";
 
     //VALUES
-    public static final int CARDS_LIST_VIEW = 0;
-    public static final int CUSTOM_VIEW = 1;
+    public static final boolean LIST_VIEW = true;
+    public static final boolean SWIPE_VIEW = false;
 
     //UI
 }

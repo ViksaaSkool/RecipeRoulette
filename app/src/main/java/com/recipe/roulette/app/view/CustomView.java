@@ -5,4 +5,6 @@ import android.support.annotation.UiThread;
 @UiThread
 public interface CustomView {
 
+    void setSwitch();
+
 }

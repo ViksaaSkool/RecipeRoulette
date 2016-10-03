@@ -21,7 +21,7 @@
             android:queryHint="@string/hint_search" />
 
         <Button
-            android:id="@+id/search_button"
+            android:id="@+id/search_button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"

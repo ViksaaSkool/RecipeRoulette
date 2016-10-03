@@ -3,6 +3,7 @@ package com.recipe.roulette.app.view.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.api.Food2ForkApi;
@@ -17,6 +18,9 @@ import com.recipe.roulette.app.view.impl.BaseActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> implements Main2View {
 
     @Inject
@@ -29,11 +33,15 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     @Inject
     Food2ForkApi mFood2ForkApi;
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        ButterKnife.bind(this);
 
         // Your code here
         // Do not call mPresenter from here, it will be null! Wait for onStart or onPostCreate.
@@ -43,13 +51,9 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     protected void onStart() {
         super.onStart();
 
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString("H", "Hello world");
-        editor.apply();
-        ChangeFragmentHelper.setMainFragment(this, R.id.main_fragment);
+        setToolbar();
 
-        if (mFood2ForkApi != null)
-            mFood2ForkApi.searchForRecipes("banana");
+        ChangeFragmentHelper.setMainFragment(this, R.id.main_fragment);
 
     }
 
@@ -68,5 +72,11 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     @Override
     protected PresenterFactory<Main2Presenter> getPresenterFactory() {
         return mPresenterFactory;
+    }
+
+    @Override
+    public void setToolbar() {
+        mToolbar.setTitle(R.string.app_name);
+        setSupportActionBar(mToolbar);
     }
 }

@@ -6,6 +6,8 @@ import com.recipe.roulette.app.injection.module.Food2ForkAPIModule;
 import com.recipe.roulette.app.model.RecipesSearchResponse;
 import com.recipe.roulette.app.util.LogUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,9 +39,8 @@ public class Food2ForkApi {
                     LogUtil.d(Constants.API_TAG, "searchForRecipes() | SUCCESS!");
 
                     RecipesSearchResponse results = (RecipesSearchResponse) response.body();
-
-
-
+                    //post the results via EventBus
+                    EventBus.getDefault().post(results);
                 } else {
                     LogUtil.d(Constants.API_TAG, "searchForRecipes() | SUCCESS! BUT, response.isSuccess() == false");
                 }

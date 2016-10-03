@@ -6,12 +6,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.recipe.roulette.app.RecipeRouletteApplication;
-import com.recipe.roulette.app.presenter.loader.PresenterFactory;
-import com.recipe.roulette.app.presenter.loader.PresenterLoader;
+import com.recipe.roulette.app.events.InternetConnectionEvent;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.presenter.BasePresenter;
+import com.recipe.roulette.app.presenter.loader.PresenterFactory;
+import com.recipe.roulette.app.presenter.loader.PresenterLoader;
+import com.recipe.roulette.app.util.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -54,6 +60,7 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
         injectDependencies();
 
         getSupportLoaderManager().initLoader(mUniqueLoaderIdentifier, null, this).startLoading();
+
     }
 
     private void injectDependencies() {
@@ -65,6 +72,7 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
     protected void onStart() {
         super.onStart();
 
+        EventBus.getDefault().register(this);
         if (mPresenter == null) {
             mNeedToCallStart.set(true);
         } else {
@@ -94,6 +102,7 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
             mPresenter.onViewDetached();
         }
 
+        EventBus.getDefault().unregister(this);
         super.onStop();
     }
 
@@ -138,4 +147,10 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
      * @param appComponent the app component
      */
     protected abstract void setupComponent(@NonNull AppComponent appComponent);
+
+
+    @Subscribe
+    public void handleConnectionChange(InternetConnectionEvent connectionEvent) {
+        ToastUtil.showToast("Connecion == " + connectionEvent.isConnected(), Toast.LENGTH_SHORT);
+    }
 }

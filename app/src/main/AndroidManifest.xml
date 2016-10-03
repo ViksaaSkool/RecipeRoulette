@@ -30,6 +30,13 @@
         </activity>
         <activity android:name=".view.activity.MainActivity" />
 
+        <!-- use GCMNetworkManager. for N+ versions -->
+        <receiver android:name=".receivers.NetworkStateReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.recipe.roulette.app.miscellaneous.MyGlideModule"
             android:value="GlideModule" />
