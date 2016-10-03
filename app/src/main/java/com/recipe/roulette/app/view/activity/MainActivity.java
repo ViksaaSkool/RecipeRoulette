@@ -43,7 +43,7 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     protected void onStart() {
         super.onStart();
 
-        setToolbar();
+        setToolbar(getString(R.string.app_name));
 
         ChangeFragmentHelper.setMainFragment(this, R.id.main_fragment);
 
@@ -67,9 +67,9 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     }
 
     @Override
-    public void setToolbar() {
+    public void setToolbar(String title) {
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setTitle(title);
     }
 }
