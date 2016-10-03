@@ -1,12 +1,10 @@
 package com.recipe.roulette.app.view.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 
 import com.recipe.roulette.app.R;
-import com.recipe.roulette.app.api.Food2ForkApi;
 import com.recipe.roulette.app.helpers.ChangeFragmentHelper;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerMain2ViewComponent;
@@ -26,12 +24,6 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     @Inject
     PresenterFactory<Main2Presenter> mPresenterFactory;
     // Your presenter is available using the mPresenter variable
-
-    @Inject
-    SharedPreferences mSharedPreferences;
-
-    @Inject
-    Food2ForkApi mFood2ForkApi;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -76,7 +68,8 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
 
     @Override
     public void setToolbar() {
-        mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.app_name);
     }
 }
