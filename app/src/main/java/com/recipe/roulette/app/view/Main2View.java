@@ -5,5 +5,7 @@ import android.support.annotation.UiThread;
 @UiThread
 public interface Main2View {
 
-    void setToolbar();
+    void setToolbar(String title);
+
+    void showSnackbarNotification(String text, int duration);
 }

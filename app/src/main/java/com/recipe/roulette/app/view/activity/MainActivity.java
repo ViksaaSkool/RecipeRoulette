@@ -2,6 +2,8 @@ package com.recipe.roulette.app.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 
 import com.recipe.roulette.app.R;
@@ -27,6 +29,8 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.root_layout)
+    CoordinatorLayout mRootLayout;
 
 
     @Override
@@ -71,5 +75,11 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(title);
+    }
+
+    @Override
+    public void showSnackbarNotification(String text, int duration) {
+        if(mRootLayout!=null)
+            Snackbar.make(mRootLayout, text, duration).show();
     }
 }
