@@ -4,7 +4,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.recipe.roulette.app.view.fragment.MainFragment;
-import com.recipe.roulette.app.view.fragment.RecipeFragment;
+import com.recipe.roulette.app.view.fragment.RecipeListFragment;
+import com.recipe.roulette.app.view.fragment.RecipeSwipeFragment;
 
 /**
  * Created by varsovski on 21-Aug-16.
@@ -12,7 +13,8 @@ import com.recipe.roulette.app.view.fragment.RecipeFragment;
 public class ChangeFragmentHelper {
 
     public static final String MAIN_FRAGMENT = "mainFragment";
-    public static final String RECIPE_FRAGMENT = "recipeFragment";
+    public static final String RECIPE_LIST_FRAGMENT = "recipeListFragment";
+    public static final String RECIPE_SWIPE_FRAGMENT = "recipeSwipeFragment";
 
 
     public static void setMainFragment(AppCompatActivity a, int container) {
@@ -22,10 +24,17 @@ public class ChangeFragmentHelper {
         ft.commit();
     }
 
-    public static void setRecipeFragment(AppCompatActivity a, int container) {
+    public static void setRecipeListFragment(AppCompatActivity a, int container) {
         FragmentTransaction ft = a.getSupportFragmentManager().beginTransaction();
-        RecipeFragment fragment = RecipeFragment.newInstance();
-        ft.replace(container, fragment, RECIPE_FRAGMENT);
+        RecipeListFragment fragment = RecipeListFragment.newInstance();
+        ft.replace(container, fragment, RECIPE_LIST_FRAGMENT);
+        ft.commit();
+    }
+
+    public static void setRecipeSwipeFragment(AppCompatActivity a, int container) {
+        FragmentTransaction ft = a.getSupportFragmentManager().beginTransaction();
+        RecipeSwipeFragment fragment = RecipeSwipeFragment.newInstance();
+        ft.replace(container, fragment, RECIPE_SWIPE_FRAGMENT);
         ft.commit();
     }
 }

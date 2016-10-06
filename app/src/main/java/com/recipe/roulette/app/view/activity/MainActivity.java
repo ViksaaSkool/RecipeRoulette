@@ -39,17 +39,13 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
 
-        // Your code here
-        // Do not call mPresenter from here, it will be null! Wait for onStart or onPostCreate.
+        setToolbar(getString(R.string.app_name));
+        ChangeFragmentHelper.setMainFragment(this, R.id.main_fragment);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        setToolbar(getString(R.string.app_name));
-
-        ChangeFragmentHelper.setMainFragment(this, R.id.main_fragment);
 
     }
 
@@ -60,8 +56,6 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
                 .main2ViewModule(new Main2ViewModule())
                 .build()
                 .inject(this);
-
-
     }
 
     @NonNull
@@ -79,7 +73,15 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
 
     @Override
     public void showSnackbarNotification(String text, int duration) {
-        if(mRootLayout!=null)
+        if (mRootLayout != null)
             Snackbar.make(mRootLayout, text, duration).show();
     }
+
+    @Override
+    public void onConnectionChange(boolean isConnected) {
+        if (!isConnected)
+            showSnackbarNotification(getString(R.string.notification_no_connection), Snackbar.LENGTH_SHORT);
+    }
+
+
 }

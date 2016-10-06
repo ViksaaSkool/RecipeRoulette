@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.RequestManager;
 import com.recipe.roulette.app.R;
+import com.recipe.roulette.app.RecipeRouletteApplication;
+import com.recipe.roulette.app.constants.Constants;
 import com.recipe.roulette.app.model.Recipe;
+import com.recipe.roulette.app.util.LogUtil;
 
 import java.util.List;
 
@@ -22,6 +26,7 @@ import butterknife.ButterKnife;
 public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
 
     private List<Recipe> mRecipes;
+    private RequestManager mGlide;
 
     public RecipeRecyclerViewAdapter(List<Recipe> recipes) {
         this.mRecipes = recipes;
@@ -30,6 +35,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     @Override
     public RecipeRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_recipe, parent, false);
+        mGlide = RecipeRouletteApplication.getAppComponent().glide();
         return new ViewHolder(itemView);
     }
 
@@ -38,8 +44,26 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
         Recipe recipe = mRecipes.get(position);
         if (recipe != null) {
 
-        } else {
+            //set image
+            if (recipe.getImageUrl() != null)
+                mGlide.load(recipe.getImageUrl()).centerCrop().into(holder.recipeImageView);
+            else
+                LogUtil.d(Constants.ADPR_TAG, "RecipeRecyclerViewAdapter onBindViewHolder() | image url at recipe( " + position + " ) is null");
 
+            //set title
+            if(recipe.getTitle()!=null)
+                holder.titleTextView.setText(recipe.getTitle());
+            else
+                LogUtil.d(Constants.ADPR_TAG, "RecipeRecyclerViewAdapter onBindViewHolder() | title at recipe( " + position + " ) is null");
+
+            //set publisher
+            if(recipe.getPublisher()!=null)
+                holder.sourceTextView.setText(recipe.getPublisher());
+            else
+                LogUtil.d(Constants.ADPR_TAG, "RecipeRecyclerViewAdapter onBindViewHolder() | publisher at recipe( " + position + " ) is null");
+
+        } else {
+            LogUtil.d(Constants.ADPR_TAG, "RecipeRecyclerViewAdapter onBindViewHolder() | recipe( " + position + " ) is null");
         }
     }
 
@@ -49,7 +73,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     }
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.recipeImageView)
         ImageView recipeImageView;
         @BindView(R.id.titleTextView)

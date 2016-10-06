@@ -22,11 +22,13 @@ public class Food2ForkApi {
     private Food2ForkAPIModule.Food2ForkApiInterface mFood2ForkApiInterface;
     private Call mCall;
 
+    private  RecipesSearchResponse mSearchResults;
+
     public Food2ForkApi(Food2ForkAPIModule.Food2ForkApiInterface food2ForkApiInterface){
         this.mFood2ForkApiInterface = food2ForkApiInterface;
     }
 
-    /* Service calls */
+    /* Service call(s) */
     @SuppressWarnings("all")
     public void searchForRecipes(String query) {
         //if call is running, stop it and call it again
@@ -39,6 +41,7 @@ public class Food2ForkApi {
                     LogUtil.d(Constants.API_TAG, "searchForRecipes() | SUCCESS!");
 
                     RecipesSearchResponse results = (RecipesSearchResponse) response.body();
+                    mSearchResults = results;
                     //post the results via EventBus
                     EventBus.getDefault().post(results);
                 } else {
@@ -60,5 +63,9 @@ public class Food2ForkApi {
             LogUtil.e(Constants.API_TAG, "cancelCurrentCall() | canceled!");
         }
 
+    }
+
+    public RecipesSearchResponse getSearchResults() {
+        return mSearchResults;
     }
 }

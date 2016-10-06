@@ -16,6 +16,7 @@ public class Constants {
     public static final String API_TAG = "APITAG";
     public static final String UI_TAG = "UITAG";
     public static final String APP_TAG = "APPTAG";
+    public static final String ADPR_TAG = "ADPRTAG";
 
     //CACHE KEYS
     public static final String LAYOUT_KEY = "layout_key";

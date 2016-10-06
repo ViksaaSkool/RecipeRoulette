@@ -63,6 +63,7 @@ public final class CustomPresenterImpl extends BasePresenterImpl<CustomView> imp
     public void search(String query) {
 
         mInteractor.searchForRecipes(query);
+
     }
 
     @Override
@@ -71,7 +72,6 @@ public final class CustomPresenterImpl extends BasePresenterImpl<CustomView> imp
             buttonView.setText(R.string.title_list);
         else
             buttonView.setText(R.string.title_swipe);
-
 
         RecipeRouletteApplication.getAppComponent().sharedPreferences().edit().putBoolean(Constants.LAYOUT_KEY, isChecked).apply();
     }
@@ -82,6 +82,7 @@ public final class CustomPresenterImpl extends BasePresenterImpl<CustomView> imp
                 && recipesSearchResponse.getCount() != null
                 && !recipesSearchResponse.getCount().equals(0)) {
             LogUtil.d(Constants.API_TAG, "CustomPresenterImpl | handleRecipesSearchResponse(), count == " + recipesSearchResponse.getCount());
+
         } else {
 
             Toast.makeText(RecipeRouletteApplication.getAppComponent().getApp(), R.string.notification_no_results, Toast.LENGTH_SHORT).show();

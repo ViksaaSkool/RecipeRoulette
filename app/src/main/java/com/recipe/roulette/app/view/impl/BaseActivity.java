@@ -6,15 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.recipe.roulette.app.RecipeRouletteApplication;
+import com.recipe.roulette.app.constants.Constants;
 import com.recipe.roulette.app.events.InternetConnectionEvent;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.presenter.BasePresenter;
 import com.recipe.roulette.app.presenter.loader.PresenterFactory;
 import com.recipe.roulette.app.presenter.loader.PresenterLoader;
-import com.recipe.roulette.app.util.ToastUtil;
+import com.recipe.roulette.app.util.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -151,6 +151,9 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
 
     @Subscribe
     public void handleConnectionChange(InternetConnectionEvent connectionEvent) {
-        ToastUtil.showToast("Connecion == " + connectionEvent.isConnected(), Toast.LENGTH_SHORT);
+        LogUtil.d(Constants.APP_TAG, "Connection change! isConnected == " + connectionEvent.isConnected());
+        onConnectionChange(connectionEvent.isConnected());
     }
+
+    public abstract void onConnectionChange(boolean isConnected);
 }

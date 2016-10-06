@@ -2,25 +2,25 @@ package com.recipe.roulette.app.presenter.impl;
 
 import android.support.annotation.NonNull;
 
-import com.recipe.roulette.app.interactor.RecipeInteractor;
-import com.recipe.roulette.app.presenter.RecipePresenter;
-import com.recipe.roulette.app.view.RecipeView;
+import com.recipe.roulette.app.interactor.RecipeSwipeInteractor;
+import com.recipe.roulette.app.presenter.RecipeSwipePresenter;
+import com.recipe.roulette.app.view.RecipeSwipeView;
 
 import javax.inject.Inject;
 
-public final class RecipePresenterImpl extends BasePresenterImpl<RecipeView> implements RecipePresenter {
+public final class RecipeSwipePresenterImpl extends BasePresenterImpl<RecipeSwipeView> implements RecipeSwipePresenter {
     /**
      * The interactor
      */
 
 
     @NonNull
-    private final RecipeInteractor mInteractor;
+    private final RecipeSwipeInteractor mInteractor;
 
     // The view is available using the mView variable
 
     @Inject
-    public RecipePresenterImpl(@NonNull RecipeInteractor interactor) {
+    public RecipeSwipePresenterImpl(@NonNull RecipeSwipeInteractor interactor) {
         mInteractor = interactor;
     }
 

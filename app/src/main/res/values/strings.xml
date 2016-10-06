@@ -13,6 +13,6 @@
 
 
     <string name="notification_no_results">No Search Results. Try Again!</string>
-
+    <string name="notification_no_connection">No Internet Connection!</string>
 
 </resources>
