@@ -14,6 +14,7 @@ import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerMain2ViewComponent;
 import com.recipe.roulette.app.injection.module.Main2ViewModule;
 import com.recipe.roulette.app.presenter.Main2Presenter;
+import com.recipe.roulette.app.presenter.ParentPresenterOwner;
 import com.recipe.roulette.app.presenter.loader.PresenterFactory;
 import com.recipe.roulette.app.view.Main2View;
 import com.recipe.roulette.app.view.impl.BaseActivity;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 
 import static com.recipe.roulette.app.R.id.appbar;
 
-public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> implements Main2View {
+public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> implements Main2View, ParentPresenterOwner<Main2Presenter>{
 
     @Inject
     PresenterFactory<Main2Presenter> mPresenterFactory;
@@ -85,6 +86,7 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
         }
     }
 
+
     @Override
     public void showSnackbarNotification(String text, int duration) {
         if (mRootLayout != null)
@@ -109,6 +111,8 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
             showSnackbarNotification(getString(R.string.notification_no_connection), Snackbar.LENGTH_SHORT);
     }
 
+
+
     @Override
     public void onBackPressed() {
         if (getFragmentManager() != null && getFragmentManager().findFragmentByTag(ChangeFragmentHelper.MAIN_FRAGMENT) == null)
@@ -121,5 +125,10 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     @Override
     protected PresenterFactory<Main2Presenter> getPresenterFactory() {
         return mPresenterFactory;
+    }
+
+    @Override
+    public Main2Presenter getParentPresenter() {
+        return mPresenter;
     }
 }
