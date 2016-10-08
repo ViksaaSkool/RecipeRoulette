@@ -29,7 +29,8 @@ public class NetworkStateReceiver extends BroadcastReceiver {
             if (activeNetwork != null) {
                 LogUtil.d(Constants.APP_TAG, "NetworkStateReceiver | activeNetwork.isConnected() == " + activeNetwork.isConnected());
                 EventBus.getDefault().post(new InternetConnectionEvent(activeNetwork.isConnected()));
-            }
+            } else
+                EventBus.getDefault().post(new InternetConnectionEvent(false));
         }
     }
 }

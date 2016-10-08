@@ -149,10 +149,10 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
             mLoadingImageView.setVisibility(View.GONE);
 
             //set back button
-            ((MainActivity)getActivity()).setBackButton(false);
+            ((MainActivity) getActivity()).setBackButton(false);
 
             //set title
-            ((MainActivity)getActivity()).setToolbar(getString(R.string.app_name));
+            ((MainActivity) getActivity()).setToolbar(getString(R.string.app_name));
         }
     }
 
@@ -162,7 +162,7 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
         loading(false);
         if (count == Constants.F2F_RESULTS_ERROR)
             ((MainActivity) getActivity()).showSnackbarNotification(getString(R.string.notification_hmm), Snackbar.LENGTH_SHORT);
-        if (count == Constants.F2F_NO_RESULTS)
+        else if (count == Constants.F2F_NO_RESULTS)
             ((MainActivity) getActivity()).showSnackbarNotification(getString(R.string.notification_no_results), Snackbar.LENGTH_SHORT);
         else {
             if (mSwitch.isChecked())

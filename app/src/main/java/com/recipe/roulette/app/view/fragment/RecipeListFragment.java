@@ -85,7 +85,7 @@ public class RecipeListFragment extends BaseFragment<RecipeListPresenter, Recipe
     public void setUI() {
 
         //set the list
-        if (mRecipesRecyclerView != null) {
+        if (mRecipesRecyclerView != null && mFood2ForkApi.getSearchResults() != null) {
             mRecipeRecyclerViewAdapter = new RecipeRecyclerViewAdapter(mFood2ForkApi.getSearchResults().getRecipes());
             mRecipesRecyclerView.setHasFixedSize(true);
             mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
