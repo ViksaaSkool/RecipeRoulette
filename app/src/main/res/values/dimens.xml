@@ -8,8 +8,8 @@
 
 
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="title_h1">50sp</dimen>
-    <dimen name="title_h2">30sp</dimen>
+    <dimen name="title_h1">30sp</dimen>
+    <dimen name="title_h2">20sp</dimen>
     <dimen name="title_list_h1">30sp</dimen>
     <dimen name="title_list_h2">15sp</dimen>
 
