@@ -156,4 +156,6 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
     }
 
     public abstract void onConnectionChange(boolean isConnected);
+
+
 }

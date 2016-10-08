@@ -43,15 +43,17 @@ public class Food2ForkApi {
                     RecipesSearchResponse results = (RecipesSearchResponse) response.body();
                     mSearchResults = results;
                     //post the results via EventBus
-                    EventBus.getDefault().post(results);
+                    EventBus.getDefault().post(results.getCount());
                 } else {
                     LogUtil.d(Constants.API_TAG, "searchForRecipes() | SUCCESS! BUT, response.isSuccess() == false");
+                    EventBus.getDefault().post(Constants.F2F_RESULTS_ERROR);
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 LogUtil.e(Constants.API_TAG, "searchForRecipes() | ERROR! t = " + t.getMessage());
+                EventBus.getDefault().post(Constants.F2F_RESULTS_ERROR);
             }
         });
     }

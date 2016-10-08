@@ -11,6 +11,8 @@ public class Constants {
     public static final String GET_RECIPE = "get";
     public static final String KEY_PARAM = "key";
     public static final String QUERY_PARAM = "q";
+    public static final int F2F_RESULTS_ERROR = -1;
+    public static final int F2F_NO_RESULTS = 0;
 
     //LOG TAGS
     public static final String API_TAG = "APITAG";
@@ -26,4 +28,6 @@ public class Constants {
     public static final boolean SWIPE_VIEW = false;
 
     //UI
+    public static final String SWIPE_CARD_INDEX_KEY = "swipe_card_index_key";
+    public static final String COUNT_KEY = "count_key";
 }

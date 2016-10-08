@@ -10,14 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.recipe.roulette.app.R;
-import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.adapters.recycler.RecipeRecyclerViewAdapter;
+import com.recipe.roulette.app.api.Food2ForkApi;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerRecipeListViewComponent;
 import com.recipe.roulette.app.injection.module.RecipeListViewModule;
 import com.recipe.roulette.app.presenter.RecipeListPresenter;
 import com.recipe.roulette.app.presenter.loader.PresenterFactory;
 import com.recipe.roulette.app.view.RecipeListView;
+import com.recipe.roulette.app.view.activity.MainActivity;
 import com.recipe.roulette.app.view.impl.BaseFragment;
 
 import javax.inject.Inject;
@@ -33,6 +34,9 @@ public class RecipeListFragment extends BaseFragment<RecipeListPresenter, Recipe
 
     @Inject
     PresenterFactory<RecipeListPresenter> mPresenterFactory;
+
+    @Inject
+    Food2ForkApi mFood2ForkApi;
 
     @BindView(R.id.recipes_recycler_view)
     RecyclerView mRecipesRecyclerView;
@@ -57,7 +61,7 @@ public class RecipeListFragment extends BaseFragment<RecipeListPresenter, Recipe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setRecyclerList();
+        setUI();
     }
 
 
@@ -77,12 +81,18 @@ public class RecipeListFragment extends BaseFragment<RecipeListPresenter, Recipe
         return mPresenterFactory;
     }
 
-    @Override
-    public void setRecyclerList() {
+    public void setUI() {
 
-        mRecipeRecyclerViewAdapter = new RecipeRecyclerViewAdapter(RecipeRouletteApplication.getAppComponent().food2ForkApi().getSearchResults().getRecipes());
-        mRecipesRecyclerView.setHasFixedSize(true);
-        mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecipesRecyclerView.setAdapter(mRecipeRecyclerViewAdapter);
+        //set the list
+        if (mRecipesRecyclerView != null) {
+            mRecipeRecyclerViewAdapter = new RecipeRecyclerViewAdapter(mFood2ForkApi.getSearchResults().getRecipes());
+            mRecipesRecyclerView.setHasFixedSize(true);
+            mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            mRecipesRecyclerView.setAdapter(mRecipeRecyclerViewAdapter);
+        }
+
+        //set the toolbar
+        int count = mFood2ForkApi.getSearchResults().getCount();
+        ((MainActivity) getActivity()).setToolbar(String.format(getString(R.string.title_search_results), count));
     }
 }

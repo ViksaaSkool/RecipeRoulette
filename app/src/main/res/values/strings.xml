@@ -10,9 +10,12 @@
     <string name="action_search">Search</string>
     <string name="title_list">Recipe List</string>
     <string name="title_swipe">Recipe Swipe</string>
+    <string name="title_share">Share This Recipe via&#8230;</string>
+    <string name="title_search_results">Search Results: %1$d</string>
 
 
     <string name="notification_no_results">No Search Results. Try Again!</string>
     <string name="notification_no_connection">No Internet Connection!</string>
+    <string name="notification_hmm">Hmm&#8230; Something went wrong</string>
 
 </resources>

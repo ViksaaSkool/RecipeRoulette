@@ -83,5 +83,11 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
             showSnackbarNotification(getString(R.string.notification_no_connection), Snackbar.LENGTH_SHORT);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager() != null && getFragmentManager().findFragmentByTag(ChangeFragmentHelper.MAIN_FRAGMENT) == null)
+            ChangeFragmentHelper.setMainFragment(this, R.id.main_fragment);
+        else
+            super.onBackPressed();
+    }
 }

@@ -25,14 +25,5 @@ public final class CustomInteractorImpl extends BaseInteractiorImpl implements C
         getAppComponent().food2ForkApi().searchForRecipes(query);
     }
 
-    @Override
-    public void setRecipeView(AppCompatActivity a) {
-        boolean view = RecipeRouletteApplication.getAppComponent().sharedPreferences().getBoolean(Constants.LAYOUT_KEY, Constants.LIST_VIEW);
-        if (view)
-            ChangeFragmentHelper.setRecipeListFragment(a, R.id.main_fragment);
-        else
-            ChangeFragmentHelper.setRecipeSwipeFragment(a, R.id.main_fragment);
-    }
-
 
 }

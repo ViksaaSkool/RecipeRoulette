@@ -28,7 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.MainActivity" />
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- use GCMNetworkManager. for N+ versions -->
         <receiver android:name=".receivers.NetworkStateReceiver">
