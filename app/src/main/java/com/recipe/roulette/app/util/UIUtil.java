@@ -1,7 +1,9 @@
 package com.recipe.roulette.app.util;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,5 +50,11 @@ public class UIUtil {
                 hideSoftKeyOutsideET(innerView);
             }
         }
+    }
+
+    public static int containerHeight(AppCompatActivity a, int ratio) {
+        DisplayMetrics dm = new DisplayMetrics();
+        a.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        return (dm.heightPixels / ratio);
     }
 }

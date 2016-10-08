@@ -25,6 +25,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 /**
  * Created by varsovski on 04-Oct-16.
@@ -88,11 +89,15 @@ public class RecipeListFragment extends BaseFragment<RecipeListPresenter, Recipe
             mRecipeRecyclerViewAdapter = new RecipeRecyclerViewAdapter(mFood2ForkApi.getSearchResults().getRecipes());
             mRecipesRecyclerView.setHasFixedSize(true);
             mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            mRecipesRecyclerView.setItemAnimator(new SlideInUpAnimator());
             mRecipesRecyclerView.setAdapter(mRecipeRecyclerViewAdapter);
         }
 
         //set the toolbar
         int count = mFood2ForkApi.getSearchResults().getCount();
         ((MainActivity) getActivity()).setToolbar(String.format(getString(R.string.title_search_results), count));
+
+        //set back button
+        ((MainActivity) getActivity()).setBackButton(true);
     }
 }

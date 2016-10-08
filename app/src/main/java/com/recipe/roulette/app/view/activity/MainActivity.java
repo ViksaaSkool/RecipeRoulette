@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.helpers.ChangeFragmentHelper;
@@ -69,6 +70,19 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(title);
+    }
+
+    public void setBackButton(boolean hasBackButton) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(hasBackButton);
+            getSupportActionBar().setDisplayShowHomeEnabled(hasBackButton);
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
     }
 
     @Override

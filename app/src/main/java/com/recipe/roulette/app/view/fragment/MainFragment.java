@@ -147,6 +147,12 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
             //set loading
             mGlide.load(R.drawable.loading).into(mLoadingImageView);
             mLoadingImageView.setVisibility(View.GONE);
+
+            //set back button
+            ((MainActivity)getActivity()).setBackButton(false);
+
+            //set title
+            ((MainActivity)getActivity()).setToolbar(getString(R.string.app_name));
         }
     }
 
