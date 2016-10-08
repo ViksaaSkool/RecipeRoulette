@@ -42,7 +42,6 @@ public class RecipeListFragment extends BaseFragment<RecipeListPresenter, Recipe
     @BindView(R.id.recipes_recycler_view)
     RecyclerView mRecipesRecyclerView;
 
-    private RecipeRecyclerViewAdapter mRecipeRecyclerViewAdapter;
 
     public RecipeListFragment() {
         // Required empty public constructor
@@ -84,20 +83,20 @@ public class RecipeListFragment extends BaseFragment<RecipeListPresenter, Recipe
 
     public void setUI() {
 
-        //set the list
         if (mRecipesRecyclerView != null && mFood2ForkApi.getSearchResults() != null) {
-            mRecipeRecyclerViewAdapter = new RecipeRecyclerViewAdapter(mFood2ForkApi.getSearchResults().getRecipes());
+            //set the list
+            RecipeRecyclerViewAdapter recipeRecyclerViewAdapter = new RecipeRecyclerViewAdapter(mFood2ForkApi.getSearchResults().getRecipes());
             mRecipesRecyclerView.setHasFixedSize(true);
             mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecipesRecyclerView.setItemAnimator(new SlideInUpAnimator());
-            mRecipesRecyclerView.setAdapter(mRecipeRecyclerViewAdapter);
+            mRecipesRecyclerView.setAdapter(recipeRecyclerViewAdapter);
+
+            //set the toolbar
+            int count = mFood2ForkApi.getSearchResults().getCount();
+            ((MainActivity) getActivity()).setToolbar(String.format(getString(R.string.title_search_results), count));
+
+            //set back button
+            ((MainActivity) getActivity()).setBackButton(true);
         }
-
-        //set the toolbar
-        int count = mFood2ForkApi.getSearchResults().getCount();
-        ((MainActivity) getActivity()).setToolbar(String.format(getString(R.string.title_search_results), count));
-
-        //set back button
-        ((MainActivity) getActivity()).setBackButton(true);
     }
 }

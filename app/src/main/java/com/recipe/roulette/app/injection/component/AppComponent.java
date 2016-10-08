@@ -9,6 +9,7 @@ import com.recipe.roulette.app.api.Food2ForkApi;
 import com.recipe.roulette.app.injection.module.AppModule;
 import com.recipe.roulette.app.injection.module.Food2ForkAPIModule;
 import com.recipe.roulette.app.injection.module.NetworkModule;
+import com.recipe.roulette.app.view.fragment.GenericSwipeCardFragment;
 
 import javax.inject.Singleton;
 
@@ -37,4 +38,5 @@ public interface AppComponent {
     RequestManager glide();
 
     void inject(RecipeRouletteApplication recipeRouletteApplication);
+    void inject(GenericSwipeCardFragment fragment);
 }

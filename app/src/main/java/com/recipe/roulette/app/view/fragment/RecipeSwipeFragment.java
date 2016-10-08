@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.recipe.roulette.app.R;
-import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.adapters.tabs.RecipeSwipeViewPagerAdapter;
+import com.recipe.roulette.app.api.Food2ForkApi;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerRecipeSwipeViewComponent;
 import com.recipe.roulette.app.injection.module.RecipeSwipeViewModule;
@@ -33,7 +33,10 @@ public class RecipeSwipeFragment extends BaseFragment<RecipeSwipePresenter, Reci
     @Inject
     PresenterFactory<RecipeSwipePresenter> mPresenterFactory;
 
-    @BindView(R.id.recipesViewPager)
+    @Inject
+    Food2ForkApi mFood2ForkApi;
+
+    @BindView(R.id.recipes_viewpager)
     ViewPager mRecipesViewPager;
 
     public RecipeSwipeFragment() {
@@ -75,10 +78,17 @@ public class RecipeSwipeFragment extends BaseFragment<RecipeSwipePresenter, Reci
     }
 
     private void setUI() {
-        int count = RecipeRouletteApplication.getAppComponent().food2ForkApi().getSearchResults().getCount();
-        mRecipesViewPager.setAdapter(new RecipeSwipeViewPagerAdapter(getFragmentManager(), count));
+        if (mFood2ForkApi.getSearchResults() != null
+                && mFood2ForkApi.getSearchResults().getCount() != null
+                && mRecipesViewPager != null) {
 
-        ((MainActivity) getActivity()).setToolbar(String.format(getString(R.string.title_search_results), count));
-        ((MainActivity) getActivity()).setBackButton(true);
+            int count = mFood2ForkApi.getSearchResults().getCount();
+            mRecipesViewPager.setAdapter(new RecipeSwipeViewPagerAdapter(getFragmentManager(), count));
+
+            ((MainActivity) getActivity()).setToolbar(String.format(getString(R.string.title_search_results), count));
+            ((MainActivity) getActivity()).setBackButton(true);
+            ((MainActivity)getActivity()).normalizeToolbar();
+        }
+
     }
 }

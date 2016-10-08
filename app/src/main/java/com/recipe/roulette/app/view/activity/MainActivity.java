@@ -2,6 +2,7 @@ package com.recipe.roulette.app.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.recipe.roulette.app.R.id.appbar;
+
 public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> implements Main2View {
 
     @Inject
@@ -32,6 +35,8 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
     Toolbar mToolbar;
     @BindView(R.id.root_layout)
     CoordinatorLayout mRootLayout;
+    @BindView(appbar)
+    AppBarLayout mAppbar;
 
 
     @Override
@@ -59,11 +64,6 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
                 .inject(this);
     }
 
-    @NonNull
-    @Override
-    protected PresenterFactory<Main2Presenter> getPresenterFactory() {
-        return mPresenterFactory;
-    }
 
     @Override
     public void setToolbar(String title) {
@@ -91,6 +91,18 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
             Snackbar.make(mRootLayout, text, duration).show();
     }
 
+    public void normalizeToolbar() {
+        if (mAppbar != null && mRootLayout != null) {
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppbar.getLayoutParams();
+            AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+            if (behavior != null) {
+                int[] consumed = new int[2];
+                behavior.onNestedPreScroll(mRootLayout, mAppbar, null, 0, -1000, consumed);
+                behavior.onNestedFling(mRootLayout, mAppbar, null, 0, -1000, true);
+            }
+        }
+    }
+
     @Override
     public void onConnectionChange(boolean isConnected) {
         if (!isConnected)
@@ -103,5 +115,11 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
             ChangeFragmentHelper.setMainFragment(this, R.id.main_fragment);
         else
             super.onBackPressed();
+    }
+
+    @NonNull
+    @Override
+    protected PresenterFactory<Main2Presenter> getPresenterFactory() {
+        return mPresenterFactory;
     }
 }

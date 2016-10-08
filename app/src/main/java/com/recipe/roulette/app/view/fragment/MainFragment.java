@@ -153,6 +153,9 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
 
             //set title
             ((MainActivity) getActivity()).setToolbar(getString(R.string.app_name));
+
+            //the toolbar should stay still
+            ((MainActivity) getActivity()).normalizeToolbar();
         }
     }
 

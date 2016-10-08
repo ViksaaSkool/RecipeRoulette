@@ -101,11 +101,11 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.recipeImageView)
+        @BindView(R.id.recipe_imageview)
         ImageView recipeImageView;
-        @BindView(R.id.titleTextView)
+        @BindView(R.id.title_textview)
         TextView titleTextView;
-        @BindView(R.id.sourceTextView)
+        @BindView(R.id.source_textview)
         TextView sourceTextView;
         @BindView(R.id.root_card_view)
         CardView rootCardView;

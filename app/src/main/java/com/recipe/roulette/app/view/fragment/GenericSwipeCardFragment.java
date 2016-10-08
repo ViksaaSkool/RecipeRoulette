@@ -12,9 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.RecipeRouletteApplication;
+import com.recipe.roulette.app.api.Food2ForkApi;
 import com.recipe.roulette.app.constants.Constants;
 import com.recipe.roulette.app.model.Recipe;
 import com.recipe.roulette.app.util.ShareUtil;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,13 +29,19 @@ import butterknife.OnClick;
 
 public class GenericSwipeCardFragment extends Fragment {
 
-    @BindView(R.id.recipeImageView)
+    @BindView(R.id.recipe_imageview)
     ImageView mRecipeImageView;
-    @BindView(R.id.titleTextView)
+    @BindView(R.id.title_textview)
     TextView mTitleTextView;
-    @BindView(R.id.sourceTextView)
+    @BindView(R.id.source_textview)
     TextView mSourceTextView;
     private Recipe mRecipe;
+
+    @Inject
+    Food2ForkApi mFood2ForkApi;
+
+    @Inject
+    RequestManager mGlide;
 
 
     public static GenericSwipeCardFragment newInstance(int index) {
@@ -48,6 +57,7 @@ public class GenericSwipeCardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.item_swipe_card_recipe, container, false);
         ButterKnife.bind(this, view);
+        RecipeRouletteApplication.getAppComponent().inject(this);
         setRecipe();
         return view;
     }
@@ -59,32 +69,35 @@ public class GenericSwipeCardFragment extends Fragment {
     }
 
     private void setRecipe() {
-        int index = getArguments().getInt(Constants.SWIPE_CARD_INDEX_KEY);
-        mRecipe = RecipeRouletteApplication
-                .getAppComponent()
-                .food2ForkApi()
-                .getSearchResults()
-                .getRecipes()
-                .get(index);
+        if (mFood2ForkApi.getSearchResults() != null
+                && mFood2ForkApi.getSearchResults().getRecipes() != null) {
+            int index = getArguments().getInt(Constants.SWIPE_CARD_INDEX_KEY);
+            mRecipe = mFood2ForkApi.getSearchResults().getRecipes().get(index);
+        }
     }
 
     public void setUI() {
-        //load image
-        RequestManager glide = RecipeRouletteApplication.getAppComponent().glide();
-        glide.load(mRecipe.getImageUrl()).centerCrop().crossFade().into(mRecipeImageView);
+        if (mRecipeImageView != null
+                && mTitleTextView != null
+                && mSourceTextView != null
+                && mRecipe != null) {
 
-        //set text
-        mTitleTextView.setText(mRecipe.getTitle());
-        mSourceTextView.setText(mRecipe.getPublisher());
+            //load image
+            mGlide.load(mRecipe.getImageUrl()).centerCrop().crossFade().into(mRecipeImageView);
+
+            //set text
+            mTitleTextView.setText(mRecipe.getTitle());
+            mSourceTextView.setText(mRecipe.getPublisher());
+        }
     }
 
-    @OnClick({R.id.recipeImageView, R.id.sourceTextView})
+    @OnClick({R.id.recipe_imageview, R.id.source_textview})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.recipeImageView:
+            case R.id.recipe_imageview:
                 ShareUtil.openLink(mRecipe.getF2fUrl());
                 break;
-            case R.id.sourceTextView:
+            case R.id.source_textview:
                 ShareUtil.openLink(mRecipe.getSourceUrl());
                 break;
         }
