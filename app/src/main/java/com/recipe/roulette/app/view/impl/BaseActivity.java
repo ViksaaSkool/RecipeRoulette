@@ -35,6 +35,9 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
      * Will be true if presenter wasn't loaded when {@link #onStart()} is reached
      */
     private final AtomicBoolean mNeedToCallStart = new AtomicBoolean(false);
+
+
+
     /**
      * The presenter for this view
      */
@@ -158,4 +161,8 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
     public abstract void onConnectionChange(boolean isConnected);
 
 
+    @Nullable
+    public P getPresenter() {
+        return mPresenter;
+    }
 }

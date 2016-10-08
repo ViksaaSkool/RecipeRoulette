@@ -8,14 +8,14 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
 import com.recipe.roulette.app.RecipeRouletteApplication;
-import com.recipe.roulette.app.presenter.loader.PresenterFactory;
-import com.recipe.roulette.app.presenter.loader.PresenterLoader;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.presenter.BasePresenter;
+import com.recipe.roulette.app.presenter.loader.PresenterFactory;
+import com.recipe.roulette.app.presenter.loader.PresenterLoader;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public abstract class BaseFragment<P extends BasePresenter<V>, V> extends Fragment implements LoaderManager.LoaderCallbacks<P> {
+public abstract class BaseFragment<P extends BasePresenter<V>, V> extends Fragment implements LoaderManager.LoaderCallbacks<P>{
     private final static String RECREATION_SAVED_STATE = "recreation_state";
     private final static String LOADER_ID_SAVED_STATE = "loader_id_state";
     /**
@@ -136,4 +136,5 @@ public abstract class BaseFragment<P extends BasePresenter<V>, V> extends Fragme
      * @param appComponent the app component
      */
     protected abstract void setupComponent(@NonNull AppComponent appComponent);
+
 }

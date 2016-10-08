@@ -43,6 +43,9 @@
             android:name="com.recipe.roulette.app.miscellaneous.MyGlideModule"
             android:value="GlideModule" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="96b812b76df3804de6308ae6de072910da2851ee" />
     </application>
 
 </manifest>

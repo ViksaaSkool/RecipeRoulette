@@ -8,4 +8,6 @@ public interface Main2View {
     void setToolbar(String title);
 
     void showSnackbarNotification(String text, int duration);
+
+
 }
