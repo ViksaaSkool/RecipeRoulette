@@ -37,14 +37,13 @@ public class GenericSwipeCardFragment extends Fragment {
     TextView mSourceTextView;
     @BindView(R.id.share_image_view)
     ImageView mShareImageView;
-    private Recipe mRecipe;
 
     @Inject
     Food2ForkApi mFood2ForkApi;
-
     @Inject
     RequestManager mGlide;
 
+    private Recipe mRecipe;
 
     public static GenericSwipeCardFragment newInstance(int index) {
         GenericSwipeCardFragment fragment = new GenericSwipeCardFragment();
