@@ -7,5 +7,6 @@ package com.recipe.roulette.app.presenter;
 public interface ParentPresenterOwner<T extends BasePresenter> {
 
     T getParentPresenter();
+
 }
 

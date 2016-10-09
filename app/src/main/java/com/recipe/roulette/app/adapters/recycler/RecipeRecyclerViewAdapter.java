@@ -44,7 +44,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     }
 
     @Override
-    public void onBindViewHolder(RecipeRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecipeRecyclerViewAdapter.ViewHolder holder, int position) {
         final Recipe recipe = mRecipes.get(position);
         if (recipe != null) {
 
@@ -84,6 +84,15 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
                 }
             });
 
+            //share recipe
+            holder.shareImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LogUtil.d(Constants.ADPR_TAG, "RecipeRecyclerViewAdapter onBindViewHolder() | SHARED sourceURL = " + recipe.getSourceUrl());
+                    ShareUtil.shareRecipe(holder.shareImageView.getContext(), recipe.getSourceUrl());
+                }
+            });
+
             int proportionalHeight = UIUtil.containerHeight((AppCompatActivity) holder.imageContainer.getContext(), 3);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, proportionalHeight);
             params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -103,14 +112,16 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.recipe_imageview)
         ImageView recipeImageView;
-        @BindView(R.id.title_textview)
+        @BindView(R.id.title_text_view)
         TextView titleTextView;
-        @BindView(R.id.source_textview)
+        @BindView(R.id.source_text_view)
         TextView sourceTextView;
         @BindView(R.id.root_card_view)
         CardView rootCardView;
         @BindView(R.id.container_layout)
         RelativeLayout imageContainer;
+        @BindView(R.id.share_image_view)
+        ImageView shareImageView;
 
         ViewHolder(View itemView) {
             super(itemView);

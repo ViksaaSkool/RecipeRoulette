@@ -31,10 +31,12 @@ public class GenericSwipeCardFragment extends Fragment {
 
     @BindView(R.id.recipe_imageview)
     ImageView mRecipeImageView;
-    @BindView(R.id.title_textview)
+    @BindView(R.id.title_text_view)
     TextView mTitleTextView;
-    @BindView(R.id.source_textview)
+    @BindView(R.id.source_text_view)
     TextView mSourceTextView;
+    @BindView(R.id.share_image_view)
+    ImageView mShareImageView;
     private Recipe mRecipe;
 
     @Inject
@@ -91,14 +93,17 @@ public class GenericSwipeCardFragment extends Fragment {
         }
     }
 
-    @OnClick({R.id.recipe_imageview, R.id.source_textview})
+    @OnClick({R.id.recipe_imageview, R.id.source_text_view, R.id.share_image_view})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.recipe_imageview:
                 ShareUtil.openLink(mRecipe.getF2fUrl());
                 break;
-            case R.id.source_textview:
+            case R.id.source_text_view:
                 ShareUtil.openLink(mRecipe.getSourceUrl());
+                break;
+            case R.id.share_image_view:
+                ShareUtil.shareRecipe(getActivity(), mRecipe.getSourceUrl());
                 break;
         }
     }

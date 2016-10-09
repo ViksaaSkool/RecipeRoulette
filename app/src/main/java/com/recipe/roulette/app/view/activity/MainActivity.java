@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 import static com.recipe.roulette.app.R.id.appbar;
 
-public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> implements Main2View, ParentPresenterOwner<Main2Presenter>{
+public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> implements Main2View, ParentPresenterOwner<Main2Presenter> {
 
     @Inject
     PresenterFactory<Main2Presenter> mPresenterFactory;
@@ -65,7 +65,6 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
                 .inject(this);
     }
 
-
     @Override
     public void setToolbar(String title) {
         setSupportActionBar(mToolbar);
@@ -73,6 +72,7 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
             getSupportActionBar().setTitle(title);
     }
 
+    @Override
     public void setBackButton(boolean hasBackButton) {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(hasBackButton);
@@ -86,13 +86,13 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
         }
     }
 
-
     @Override
     public void showSnackbarNotification(String text, int duration) {
         if (mRootLayout != null)
             Snackbar.make(mRootLayout, text, duration).show();
     }
 
+    @Override
     public void normalizeToolbar() {
         if (mAppbar != null && mRootLayout != null) {
             CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppbar.getLayoutParams();
@@ -110,7 +110,6 @@ public final class MainActivity extends BaseActivity<Main2Presenter, Main2View> 
         if (!isConnected)
             showSnackbarNotification(getString(R.string.notification_no_connection), Snackbar.LENGTH_SHORT);
     }
-
 
 
     @Override
