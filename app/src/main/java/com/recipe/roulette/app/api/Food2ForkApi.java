@@ -54,6 +54,7 @@ public class Food2ForkApi {
             public void onFailure(Call call, Throwable t) {
                 LogUtil.e(Constants.API_TAG, "searchForRecipes() | ERROR! t = " + t.getMessage());
                 EventBus.getDefault().post(Constants.F2F_RESULTS_ERROR);
+
             }
         });
     }
