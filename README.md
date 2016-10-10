@@ -88,3 +88,28 @@ It provides you with basic templates of the components you need and it's quite t
 <img src="http://bit.ly/2dWXQMR" width="250" height="400" align="middle"/> 
 
 After a while you can play around with the structure to suit your needs.
+
+
+#Miscellaneous
+
+When writing clean code is important to obey guidelines, coding style and naming conventions. There are more than a few guidelines out there, the one I follow is here ([ribot/android-guidelines](http://bit.ly/2e8dVo9)).
+
+Write build scripts and define build properties in [build.gradle](http://bit.ly/2dK5KM9) file. Note: It's time efficient to build the app from terminal. To create Signed APK Build in root of the project run. After the task is finished ZIP archive with .apk and mapping.txt will be moved in /apk-build.
+
+Windows: gradlew buildSignedAPK
+
+Linux: ./gradlew buildSignedAPK (if file not executable run chmod +x gradlew)
+
+ 
+
+
+Also, when running in debug mode, version your app with suffix to suit your project needs, for Recipe Roulette is 
+                  
+                  versionNameSuffix "_" + gitBranch() + "_" + getTimeStamp() 
+
+The end result is something like
+
+<img src="http://bit.ly/2dK7PHR" width="400" height="300" align="middle"/> 
+
+Add constants, keys and sensitive info in build.gradle and put their values in local.properites.
+
