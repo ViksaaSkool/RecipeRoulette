@@ -14,6 +14,25 @@ public class Constants {
     public static final int F2F_RESULTS_ERROR = -1;
     public static final int F2F_NO_RESULTS = 0;
 
+    //REDDIT API
+    public static final String BASE_REDDIT_URL = "https://www.reddit.com/";
+    public static final String BASE_OAUTH_REDDIT_URL = "https://oauth.reddit.com";
+    public static final String SEARCH_SUBREDDIT = "r/{subreddit}/search.json";
+    public static final String REDDIT_OATH2_PATH = "/api/v1/access_token";
+    public static final String SUBREDDIT_PATH = "subreddit";
+    public static final String RESTRICT_PARAM = "restrict_sr";
+    public static final String SORT_PARAM = "sort";
+    public static final String SCOPE_PARAM = "t";
+    public static final String TITLE_SEARCH_VALUE = "title:";
+    public static final String RESTRICT_VALUE = "on";
+    public static final String SORT_VALUE = "relevance";
+    public static final String SCOPE_VALUE = "all";
+    public static final String BODY_PARAMS = "grant_type=https://oauth.reddit.com/grants/installed_client&device_id=";
+    public static final String REDDIT_PASS = ""; //it's userless, so it's empty pass
+    public static final int VIDEO = 1;
+    public static final int GIF = 2;
+    //https://www.reddit.com/r/recipegifs/search.json?q=title%3Aapple&restrict_sr=on&sort=relevance&t=all
+
     //LOG TAGS
     public static final String API_TAG = "APITAG";
     public static final String UI_TAG = "UITAG";

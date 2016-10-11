@@ -43,6 +43,8 @@ android {
             signingConfig signingConfigs.release
             zipAlignEnabled true
             buildConfigField "String", "FOOD_2_FORK_API_KEY", getLocalProperty('food2ForkAPIKEY_PROD')
+            buildConfigField "String", "REDDIT_CLIENT_ID", getLocalProperty('redditClientID_PROD')
+            buildConfigField "String", "REDDIT_PASS", getLocalProperty('redditPass_PROD')
         }
         debug {
             //debug the obfuscation if needed
@@ -51,6 +53,8 @@ android {
             debuggable true
             versionNameSuffix "_" + gitBranch() + "_" + getTimeStamp()
             buildConfigField "String", "FOOD_2_FORK_API_KEY", getLocalProperty('food2ForkAPIKEY_DEV')
+            buildConfigField "String", "REDDIT_CLIENT_ID", getLocalProperty('redditClientID_DEV')
+            buildConfigField "String", "REDDIT_PASS", getLocalProperty('redditPass_DEV')
 
         }
     }

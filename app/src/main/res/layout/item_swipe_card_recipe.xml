@@ -5,6 +5,12 @@
     android:background="@android:color/black"
     android:orientation="vertical">
 
+    <include
+        layout="@layout/type_thumb_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
     <ImageView
         android:id="@+id/recipe_imageview"
         android:layout_width="match_parent"
