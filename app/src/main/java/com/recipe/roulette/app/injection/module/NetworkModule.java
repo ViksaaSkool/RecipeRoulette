@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.constants.Constants;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -54,8 +55,9 @@ public final class NetworkModule {
 
 
     @Provides
+    @Named("f2f")
     @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit_f2f(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(Constants.BASE_F2F_URL)
@@ -64,8 +66,32 @@ public final class NetworkModule {
     }
 
     @Provides
+    @Named("reddit")
     @Singleton
-    RequestManager provideGlide(RecipeRouletteApplication application){
+    Retrofit provideRetrofit_r(Gson gson, OkHttpClient okHttpClient) {
+        return new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(Constants.BASE_REDDIT_URL)
+                .client(okHttpClient)
+                .build();
+    }
+
+
+    @Provides
+    @Named("reddit_oauth")
+    @Singleton
+    Retrofit provideRetrofit_ro(Gson gson, OkHttpClient okHttpClient) {
+        return new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(Constants.BASE_OAUTH_REDDIT_URL)
+                .client(okHttpClient)
+                .build();
+    }
+
+
+    @Provides
+    @Singleton
+    RequestManager provideGlide(RecipeRouletteApplication application) {
         return Glide.with(application);
     }
 

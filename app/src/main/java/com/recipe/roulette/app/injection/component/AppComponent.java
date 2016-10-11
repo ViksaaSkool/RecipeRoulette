@@ -11,6 +11,7 @@ import com.recipe.roulette.app.injection.module.Food2ForkAPIModule;
 import com.recipe.roulette.app.injection.module.NetworkModule;
 import com.recipe.roulette.app.view.fragment.GenericSwipeCardFragment;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -25,7 +26,14 @@ public interface AppComponent {
 
     RecipeRouletteApplication getApp();
 
+    @Named("f2f")
     Retrofit retrofit();
+
+    @Named("reddit")
+    Retrofit retrofit_r();
+
+    @Named("reddit_oauth")
+    Retrofit retrofit_ro();
 
     OkHttpClient okHttpClient();
 
