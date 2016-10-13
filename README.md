@@ -17,7 +17,7 @@ It extends the observer pattern to support sequences of data and/or events and a
 
 On the other hand, more vivid explanation comes from [this](http://bit.ly/2dhIe9m) reddit question:
 
-<img src="http://bit.ly/2e6yi5s" width="600" height="100"/>
+<img src="http://bit.ly/2e6yi5s" width="500" height="70"/>
 
 
 I urge you the read the whole thing, but here's the answer that stands out:
