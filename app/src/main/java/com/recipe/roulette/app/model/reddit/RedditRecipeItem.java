@@ -1,11 +1,13 @@
 package com.recipe.roulette.app.model.reddit;
 
 
+import java.io.Serializable;
+
 /**
  * Created by varsovski on 10-Oct-16.
  */
 
-public class RedditRecipeItem {
+public class RedditRecipeItem implements Serializable {
 
 
     private String title;

@@ -18,4 +18,8 @@
     <string name="notification_no_connection">No Internet Connection!</string>
     <string name="notification_hmm">Hmm&#8230; Something went wrong</string>
 
+    <string name="text_play_video">Tap to play video</string>
+    <string name="text_load_gif">Tap to load gif</string>
+    <string name="text_loading_gif">Loading gif&#8230;</string>
+
 </resources>

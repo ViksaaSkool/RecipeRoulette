@@ -1,5 +1,6 @@
 package com.recipe.roulette.app.helpers;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
@@ -31,9 +32,25 @@ public class ChangeFragmentHelper {
         ft.commit();
     }
 
+    public static void setRecipeListFragmentExtra(AppCompatActivity a, int container, Bundle b) {
+        FragmentTransaction ft = a.getSupportFragmentManager().beginTransaction();
+        RecipeListFragment fragment = RecipeListFragment.newInstance();
+        fragment.setArguments(b);
+        ft.replace(container, fragment, RECIPE_LIST_FRAGMENT);
+        ft.commit();
+    }
+
     public static void setRecipeSwipeFragment(AppCompatActivity a, int container) {
         FragmentTransaction ft = a.getSupportFragmentManager().beginTransaction();
         RecipeSwipeFragment fragment = RecipeSwipeFragment.newInstance();
+        ft.replace(container, fragment, RECIPE_SWIPE_FRAGMENT);
+        ft.commit();
+    }
+
+    public static void setRecipeSwipeFragmentExtra(AppCompatActivity a, int container, Bundle b) {
+        FragmentTransaction ft = a.getSupportFragmentManager().beginTransaction();
+        RecipeSwipeFragment fragment = RecipeSwipeFragment.newInstance();
+        fragment.setArguments(b);
         ft.replace(container, fragment, RECIPE_SWIPE_FRAGMENT);
         ft.commit();
     }

@@ -35,6 +35,8 @@ public class Constants {
 
     public static final int VIDEO = 1;
     public static final int GIF = 2;
+    public static final int READ_TIMEOUT = 60;
+    public static final int CONNECT_TIMEOUT = 60;
     //https://www.reddit.com/r/recipegifs/search.json?q=title%3Aapple&restrict_sr=on&sort=relevance&t=all
 
     //LOG TAGS
@@ -45,6 +47,10 @@ public class Constants {
 
     //CACHE KEYS
     public static final String LAYOUT_KEY = "layout_key";
+    public static final String RECIPES_KEY = "recipes_key";
+    public static final String ACCESS_TOKEN = "access_token_key";
+    public static final String REFRESH_TOKEN = "refresh_token_key";
+    public static final String TOKEN_EXPIRATION_TIME = "token_expiration_time_key";
 
     //VALUES
     public static final boolean LIST_VIEW = true;

@@ -35,11 +35,17 @@ public interface AppComponent {
     @Named("reddit_oauth")
     Retrofit retrofit_ro();
 
+
+    @Named("f2f")
     OkHttpClient okHttpClient();
 
-    SharedPreferences sharedPreferences();
+    @Named("reddit")
+    OkHttpClient okHttpClient_r();
 
-    Food2ForkAPIModule.Food2ForkApiInterface food2ForkApiInterface();
+    @Named("reddit_oauth")
+    OkHttpClient okHttpClient_ro();
+
+    SharedPreferences sharedPreferences();
 
     Food2ForkApi food2ForkApi();
 
