@@ -1,12 +1,14 @@
 package com.recipe.roulette.app.injection.module;
 
 import com.recipe.roulette.app.constants.Constants;
-import com.recipe.roulette.app.model.RecipesSearchResponse;
+import com.recipe.roulette.app.model.reddit.RedditRecipeResponse;
 import com.recipe.roulette.app.model.reddit.TokenResponse;
 
-import retrofit2.Call;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by varsovski on 11-Oct-16.
@@ -16,15 +18,15 @@ public class RedditModule {
 
     public interface RedditOauthModuleApiInterface {
         @GET(Constants.REDDIT_OATH2_PATH)
-        Call<TokenResponse> oAuth(@Query(Constants.KEY_PARAM) String key,
-                                  @Query(Constants.QUERY_PARAM) String query);
+        Observable<TokenResponse> oAuth(@Body RequestBody body);
     }
+
     public interface RedditModuleApiInterface {
         @GET(Constants.SEARCH_SUBREDDIT)
-        Call<RecipesSearchResponse> searchSubreddit(@Query(Constants.KEY_PARAM) String key,
-                                          @Query(Constants.QUERY_PARAM) String query);
-
-
+        Observable<RedditRecipeResponse> searchSubreddit(@Query(Constants.QUERY_PARAM) String query,
+                                                         @Query(Constants.RESTRICT_PARAM) String restrict,
+                                                         @Query(Constants.SORT_PARAM) String sort,
+                                                         @Query(Constants.SCOPE_PARAM) String scope);
     }
 
     /*@Provides

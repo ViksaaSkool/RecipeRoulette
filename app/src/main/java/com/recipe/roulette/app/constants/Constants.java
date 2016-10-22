@@ -28,7 +28,7 @@ public class Constants {
     public static final String SORT_VALUE = "relevance";
     public static final String SCOPE_VALUE = "all";
     public static final String BODY_PARAMS_GET_TOKEN = "grant_type=https://oauth.reddit.com/grants/installed_client&device_id=";
-    public static final String BODY_PARAMS_REFRESH_TOKEN = "grant_type=refresh_token";
+    public static final String BODY_PARAMS_REFRESH_TOKEN = "grant_type=refresh_token&refresh_token=";
     public static final String SUBREDDIT_RECIPE_GIFS = "recipegifs";
     public static final String SUBREDDIT_GIF_RECIPES = "gifrecipes";
     public static final String SUBREDDIT_COOKING_VIDEOS = "cookingvideos";
