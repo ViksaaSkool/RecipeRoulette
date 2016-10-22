@@ -22,9 +22,9 @@ public class Food2ForkApi {
     private Food2ForkAPIModule.Food2ForkApiInterface mFood2ForkApiInterface;
     private Call mCall;
 
-    private  RecipesSearchResponse mSearchResults;
+    private RecipesSearchResponse mSearchResults;
 
-    public Food2ForkApi(Food2ForkAPIModule.Food2ForkApiInterface food2ForkApiInterface){
+    public Food2ForkApi(Food2ForkAPIModule.Food2ForkApiInterface food2ForkApiInterface) {
         this.mFood2ForkApiInterface = food2ForkApiInterface;
     }
 
@@ -37,7 +37,7 @@ public class Food2ForkApi {
         mCall.clone().enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                if (response.isSuccess()) {
+                if (response.isSuccessful()) {
                     LogUtil.d(Constants.API_TAG, "searchForRecipes() | SUCCESS!");
 
                     RecipesSearchResponse results = (RecipesSearchResponse) response.body();

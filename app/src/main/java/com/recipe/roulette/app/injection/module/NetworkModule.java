@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.recipe.roulette.app.BuildConfig;
 import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.constants.Constants;
+import com.recipe.roulette.app.util.LogUtil;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +28,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -68,7 +71,7 @@ public final class NetworkModule {
     @Provides
     @Named("reddit")
     @Singleton
-    OkHttpClient provideOkHttpClient_r(Cache cache, final SharedPreferences sharedPreferences) {
+    OkHttpClient provideOkHttpClient_r(Cache cache, final SharedPreferences sharedPreferences, HttpLoggingInterceptor logging) {
 
         OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder();
         okHttpClient.readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
@@ -81,6 +84,7 @@ public final class NetworkModule {
             }
         });
         okHttpClient.cache(cache);
+        okHttpClient.addInterceptor(logging);
 
         return okHttpClient.build();
     }
@@ -88,7 +92,7 @@ public final class NetworkModule {
     @Provides
     @Named("reddit_oauth")
     @Singleton
-    OkHttpClient provideOkHttpClient_ro(Cache cache, SharedPreferences sharedPreferences) {
+    OkHttpClient provideOkHttpClient_ro(Cache cache, SharedPreferences sharedPreferences, HttpLoggingInterceptor logging) {
 
         OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder();
         okHttpClient.readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
@@ -103,6 +107,7 @@ public final class NetworkModule {
         //if token is expired and it need to be refreshed
         // okHttpClient.addInterceptor(new RefreshTokenInterceptor(sharedPreferences));
         okHttpClient.cache(cache);
+        okHttpClient.addInterceptor(logging);
 
         return okHttpClient.build();
     }
@@ -124,7 +129,8 @@ public final class NetworkModule {
     Retrofit provideRetrofit_r(Gson gson, @Named("reddit") OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(Constants.BASE_REDDIT_URL)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(Constants.BASE_OAUTH_REDDIT_URL)
                 .client(okHttpClient)
                 .build();
     }
@@ -136,7 +142,8 @@ public final class NetworkModule {
     Retrofit provideRetrofit_ro(Gson gson, @Named("reddit_oauth") OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(Constants.BASE_OAUTH_REDDIT_URL)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(Constants.BASE_REDDIT_URL)
                 .client(okHttpClient)
                 .build();
     }
@@ -148,4 +155,34 @@ public final class NetworkModule {
         return Glide.with(application);
     }
 
+    @Provides
+    @Singleton
+    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        if (BuildConfig.DEBUG) {
+            logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        }
+        return logging;
+    }
+
+
+    public Authenticator getBasicAuth(final String username, final String password) {
+        return new Authenticator() {
+            private int mCounter = 0;
+
+            @Override
+            public Request authenticate(Route route, Response response) throws IOException {
+                LogUtil.d("OkHttp", "authenticate(Route route, Response response) | mCounter = " + mCounter);
+                if (mCounter++ > 0) {
+                    LogUtil.d("OkHttp", "authenticate(Route route, Response response) | I'll return null");
+                    return null;
+                } else {
+                    LogUtil.d("OkHttp", "authenticate(Route route, Response response) | This is first time, I'll try to authenticate");
+                    String credential = Credentials.basic(username, password);
+                    return response.request().newBuilder().header("Authorization", credential).build();
+                }
+            }
+        };
+    }
 }

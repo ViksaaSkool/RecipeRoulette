@@ -6,9 +6,12 @@ import android.content.SharedPreferences;
 import com.bumptech.glide.RequestManager;
 import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.api.Food2ForkApi;
+import com.recipe.roulette.app.api.retrofit.RefreshTokenInterceptor;
 import com.recipe.roulette.app.injection.module.AppModule;
 import com.recipe.roulette.app.injection.module.Food2ForkAPIModule;
 import com.recipe.roulette.app.injection.module.NetworkModule;
+import com.recipe.roulette.app.injection.module.RedditModule;
+import com.recipe.roulette.app.view.activity.SplashScreenActivity;
 import com.recipe.roulette.app.view.fragment.GenericSwipeCardFragment;
 
 import javax.inject.Named;
@@ -19,7 +22,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 @Singleton
-@Component(modules = {AppModule.class, NetworkModule.class, Food2ForkAPIModule.class})
+@Component(modules = {AppModule.class, NetworkModule.class, Food2ForkAPIModule.class, RedditModule.class})
 public interface AppComponent {
 
     Context getAppContext();
@@ -34,7 +37,6 @@ public interface AppComponent {
 
     @Named("reddit_oauth")
     Retrofit retrofit_ro();
-
 
     @Named("f2f")
     OkHttpClient okHttpClient();
@@ -51,6 +53,13 @@ public interface AppComponent {
 
     RequestManager glide();
 
+    RedditModule.RedditOauthModuleApiInterface redditOauthApiInterface();
+
     void inject(RecipeRouletteApplication recipeRouletteApplication);
+
     void inject(GenericSwipeCardFragment fragment);
+
+    void inject(SplashScreenActivity activity);
+
+    void inject(RefreshTokenInterceptor refreshTokenInterceptor);
 }

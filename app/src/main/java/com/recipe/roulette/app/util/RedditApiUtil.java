@@ -1,9 +1,16 @@
 package com.recipe.roulette.app.util;
 
+import android.content.SharedPreferences;
+
 import com.recipe.roulette.app.constants.Constants;
 import com.recipe.roulette.app.model.reddit.ChildData;
+import com.recipe.roulette.app.model.reddit.TokenResponse;
 
+import java.nio.charset.Charset;
 import java.util.UUID;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * Created by varsovski on 10-Oct-16.
@@ -29,8 +36,30 @@ public class RedditApiUtil {
             return -1;
     }
 
-
     public static boolean isVideoOrGif(ChildData dataItem) {
         return getRecipeType(dataItem) != -1;
+    }
+
+    public static RequestBody getReqestBodyForToken() {
+        String bodyString = Constants.BODY_PARAMS_GET_TOKEN + RedditApiUtil.getUUID();
+        RequestBody r = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"),
+                bodyString.getBytes(Charset.forName("UTF-8")));
+        return r;
+    }
+
+    public static boolean hasValidToken(SharedPreferences sharedPreferences) {
+        return sharedPreferences.getString(Constants.ACCESS_TOKEN, "").isEmpty()
+                || sharedPreferences.getLong(Constants.TOKEN_EXPIRATION_TIME, System.currentTimeMillis()) <= System.currentTimeMillis();
+    }
+
+    public static void saveTokenSharedPreferences(SharedPreferences sharedPreferences, TokenResponse tokenResponse) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (tokenResponse.getAccessToken() != null)
+            editor.putString(Constants.ACCESS_TOKEN, tokenResponse.getAccessToken()).apply();
+        if (tokenResponse.getExpiresIn() != null) {
+            Long expirationTime = System.currentTimeMillis() + Long.valueOf(tokenResponse.getExpiresIn());
+            editor.putLong(Constants.TOKEN_EXPIRATION_TIME, expirationTime).apply();
+        }
+
     }
 }
