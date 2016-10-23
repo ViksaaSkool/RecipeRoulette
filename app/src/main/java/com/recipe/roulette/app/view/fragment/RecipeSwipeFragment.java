@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.adapters.tabs.RecipeSwipeViewPagerAdapter;
-import com.recipe.roulette.app.api.Food2ForkApi;
+import com.recipe.roulette.app.api.RedditApi;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerRecipeSwipeViewComponent;
 import com.recipe.roulette.app.injection.module.RecipeSwipeViewModule;
@@ -34,7 +34,7 @@ public class RecipeSwipeFragment extends BaseFragment<RecipeSwipePresenter, Reci
     PresenterFactory<RecipeSwipePresenter> mPresenterFactory;
 
     @Inject
-    Food2ForkApi mFood2ForkApi;
+    RedditApi mRedditApi;
 
     @BindView(R.id.recipes_viewpager)
     ViewPager mRecipesViewPager;
@@ -78,16 +78,15 @@ public class RecipeSwipeFragment extends BaseFragment<RecipeSwipePresenter, Reci
     }
 
     private void setUI() {
-        if (mFood2ForkApi.getSearchResults() != null
-                && mFood2ForkApi.getSearchResults().getCount() != null
+        if (mRedditApi.getRecipeItems() != null
                 && mRecipesViewPager != null) {
 
-            int count = mFood2ForkApi.getSearchResults().getCount();
+            int count = mRedditApi.getRecipeItems().size();
             mRecipesViewPager.setAdapter(new RecipeSwipeViewPagerAdapter(getFragmentManager(), count));
 
             ((MainActivity) getActivity()).setToolbar(String.format(getString(R.string.title_search_results), count));
             ((MainActivity) getActivity()).setBackButton(true);
-            ((MainActivity)getActivity()).normalizeToolbar();
+            ((MainActivity) getActivity()).normalizeToolbar();
         }
 
     }

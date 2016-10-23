@@ -28,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * Created by varsovski on 31-Aug-16.
@@ -85,21 +86,21 @@ public class RedditRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Reddit
                             //load gif
                             mGlide.load(recipe.getItemLink())
                                     .listener(new RequestListener<String, GlideDrawable>() {
-                                @Override
-                                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                    holder.typeTextView.setText(R.string.text_load_gif);
-                                    if (e != null)
-                                        LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif load failed; message = " + e.getMessage());
-                                    return true;
-                                }
+                                        @Override
+                                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                            holder.typeTextView.setText(R.string.text_load_gif);
+                                            if (e != null)
+                                                LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif load failed; message = " + e.getMessage());
+                                            return true;
+                                        }
 
-                                @Override
-                                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                    holder.typeLayout.setVisibility(View.GONE);
-                                    LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif loaded!");
-                                    return true;
-                                }
-                            }).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                        @Override
+                                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                            holder.typeLayout.setVisibility(View.GONE);
+                                            LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif loaded!");
+                                            return true;
+                                        }
+                                    }).diskCacheStrategy(DiskCacheStrategy.NONE)
                                     .into(holder.recipeImageView);
                         }
                     });
@@ -109,7 +110,11 @@ public class RedditRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Reddit
 
             //set image
             if (recipe.getThumbUrl() != null)
-              mGlide.load(recipe.getThumbUrl()).centerCrop().crossFade().into(holder.recipeImageView);
+                mGlide.load(recipe.getThumbUrl())
+                        .crossFade()
+                        .bitmapTransform(new BlurTransformation(holder.recipeImageView.getContext(), 3))
+                        .centerCrop()
+                        .into(holder.recipeImageView);
             else
                 LogUtil.d(Constants.ADPR_TAG, "RecipeRecyclerViewAdapter onBindViewHolder() | image url at recipe( " + position + " ) is null");
 
