@@ -6,5 +6,5 @@ public interface CustomPresenter extends BasePresenter<CustomView> {
 
     void search(String query);
 
-
+    void searchForRedditRecipes(String query);
 }

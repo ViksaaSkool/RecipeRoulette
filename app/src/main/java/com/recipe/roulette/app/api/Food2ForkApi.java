@@ -46,14 +46,14 @@ public class Food2ForkApi {
                     EventBus.getDefault().post(results.getCount());
                 } else {
                     LogUtil.d(Constants.API_TAG, "searchForRecipes() | SUCCESS! BUT, response.isSuccess() == false");
-                    EventBus.getDefault().post(Constants.F2F_RESULTS_ERROR);
+                    EventBus.getDefault().post(Constants.RESULTS_ERROR);
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 LogUtil.e(Constants.API_TAG, "searchForRecipes() | ERROR! t = " + t.getMessage());
-                EventBus.getDefault().post(Constants.F2F_RESULTS_ERROR);
+                EventBus.getDefault().post(Constants.RESULTS_ERROR);
 
             }
         });

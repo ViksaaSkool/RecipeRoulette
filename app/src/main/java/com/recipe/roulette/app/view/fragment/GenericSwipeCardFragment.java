@@ -7,15 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.RecipeRouletteApplication;
-import com.recipe.roulette.app.api.Food2ForkApi;
+import com.recipe.roulette.app.api.RedditApi;
 import com.recipe.roulette.app.constants.Constants;
-import com.recipe.roulette.app.model.Recipe;
-import com.recipe.roulette.app.util.ShareUtil;
+import com.recipe.roulette.app.model.reddit.RedditRecipeItem;
+import com.recipe.roulette.app.util.LogUtil;
 
 import javax.inject.Inject;
 
@@ -39,11 +44,17 @@ public class GenericSwipeCardFragment extends Fragment {
     ImageView mShareImageView;
 
     @Inject
-    Food2ForkApi mFood2ForkApi;
+    RedditApi mRedditApi;
     @Inject
     RequestManager mGlide;
+    @BindView(R.id.type_image_view)
+    ImageView mTypeImageView;
+    @BindView(R.id.type_text_view)
+    TextView mTypeTextView;
+    @BindView(R.id.type_layout)
+    LinearLayout mTypeLayout;
 
-    private Recipe mRecipe;
+    private RedditRecipeItem mRecipe;
 
     public static GenericSwipeCardFragment newInstance(int index) {
         GenericSwipeCardFragment fragment = new GenericSwipeCardFragment();
@@ -70,10 +81,9 @@ public class GenericSwipeCardFragment extends Fragment {
     }
 
     private void setRecipe() {
-        if (mFood2ForkApi.getSearchResults() != null
-                && mFood2ForkApi.getSearchResults().getRecipes() != null) {
+        if (mRedditApi.getRecipeItems() != null) {
             int index = getArguments().getInt(Constants.SWIPE_CARD_INDEX_KEY);
-            mRecipe = mFood2ForkApi.getSearchResults().getRecipes().get(index);
+            mRecipe = mRedditApi.getRecipeItems().get(index);
         }
     }
 
@@ -84,11 +94,26 @@ public class GenericSwipeCardFragment extends Fragment {
                 && mRecipe != null) {
 
             //load image
-            mGlide.load(mRecipe.getImageUrl()).centerCrop().crossFade().into(mRecipeImageView);
+            mGlide.load(mRecipe.getItemLink()).listener(new RequestListener<String, GlideDrawable>() {
+                @Override
+                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    mTypeTextView.setText(R.string.text_load_gif);
+                    if (e != null)
+                        LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif load failed; message = " + e.getMessage());
+                    return true;
+                }
 
+                @Override
+                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    mTypeLayout.setVisibility(View.GONE);
+                    LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif loaded!");
+                    return true;
+                }
+            }).diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(mRecipeImageView);
             //set text
             mTitleTextView.setText(mRecipe.getTitle());
-            mSourceTextView.setText(mRecipe.getPublisher());
+            mSourceTextView.setText(mRecipe.getLinkFlairText());
         }
     }
 
@@ -96,13 +121,13 @@ public class GenericSwipeCardFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.recipe_imageview:
-                ShareUtil.openLink(mRecipe.getF2fUrl());
+               // ShareUtil.openLink(mRecipe.getF2fUrl());
                 break;
             case R.id.source_text_view:
-                ShareUtil.openLink(mRecipe.getSourceUrl());
+              //  ShareUtil.openLink(mRecipe.getSourceUrl());
                 break;
             case R.id.share_image_view:
-                ShareUtil.shareRecipe(getActivity(), mRecipe.getSourceUrl());
+               // ShareUtil.shareRecipe(getActivity(), mRecipe.getSourceUrl());
                 break;
         }
     }

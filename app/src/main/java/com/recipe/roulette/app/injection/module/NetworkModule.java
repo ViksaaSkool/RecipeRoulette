@@ -69,50 +69,6 @@ public final class NetworkModule {
     }
 
     @Provides
-    @Named("reddit")
-    @Singleton
-    OkHttpClient provideOkHttpClient_r(Cache cache, final SharedPreferences sharedPreferences, HttpLoggingInterceptor logging) {
-
-        OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder();
-        okHttpClient.readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
-        okHttpClient.connectTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
-        okHttpClient.authenticator(new Authenticator() {
-            @Override
-            public Request authenticate(Route route, Response response) throws IOException {
-                String token = sharedPreferences.getString(Constants.ACCESS_TOKEN, "");
-                return response.request().newBuilder().header("Authorization", token).build();
-            }
-        });
-        okHttpClient.cache(cache);
-        okHttpClient.addInterceptor(logging);
-
-        return okHttpClient.build();
-    }
-
-    @Provides
-    @Named("reddit_oauth")
-    @Singleton
-    OkHttpClient provideOkHttpClient_ro(Cache cache, SharedPreferences sharedPreferences, HttpLoggingInterceptor logging) {
-
-        OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder();
-        okHttpClient.readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
-        okHttpClient.connectTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
-        okHttpClient.authenticator(new Authenticator() {
-            @Override
-            public Request authenticate(Route route, Response response) throws IOException {
-                String credential = Credentials.basic(BuildConfig.REDDIT_CLIENT_ID, BuildConfig.REDDIT_PASS);
-                return response.request().newBuilder().header("Authorization", credential).build();
-            }
-        });
-        //if token is expired and it need to be refreshed
-        // okHttpClient.addInterceptor(new RefreshTokenInterceptor(sharedPreferences));
-        okHttpClient.cache(cache);
-        okHttpClient.addInterceptor(logging);
-
-        return okHttpClient.build();
-    }
-
-    @Provides
     @Named("f2f")
     @Singleton
     Retrofit provideRetrofit_f2f(Gson gson, @Named("f2f") OkHttpClient okHttpClient) {
@@ -126,13 +82,58 @@ public final class NetworkModule {
     @Provides
     @Named("reddit")
     @Singleton
+    OkHttpClient provideOkHttpClient_r(Cache cache, final SharedPreferences sharedPreferences, HttpLoggingInterceptor logging) {
+
+        OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder();
+        okHttpClient.readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
+        okHttpClient.connectTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
+        okHttpClient.authenticator(new Authenticator() {
+            @Override
+            public Request authenticate(Route route, Response response) throws IOException {
+                String token = sharedPreferences.getString(Constants.ACCESS_TOKEN, "");
+                LogUtil.d(Constants.API_TAG, "authenticate() | token = " + token);
+                return response.request().newBuilder().header("Authorization", "bearer oKdh8APnKu9LBB2aqOzOFmf5qjw"/*token*/).build();
+            }
+        });
+        okHttpClient.cache(cache);
+        okHttpClient.addInterceptor(logging);
+
+        return okHttpClient.build();
+    }
+
+    @Provides
+    @Named("reddit")
+    @Singleton
     Retrofit provideRetrofit_r(Gson gson, @Named("reddit") OkHttpClient okHttpClient) {
+
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(Constants.BASE_OAUTH_REDDIT_URL)
+                .baseUrl(Constants.BASE_REDDIT_URL/*Constants.BASE_OAUTH_REDDIT_URL*/)
                 .client(okHttpClient)
                 .build();
+    }
+
+
+    @Provides
+    @Named("reddit_oauth")
+    @Singleton
+    OkHttpClient provideOkHttpClient_ro(Cache cache, HttpLoggingInterceptor logging) {
+
+        OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder();
+        okHttpClient.readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
+        okHttpClient.connectTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
+        okHttpClient.authenticator(new Authenticator() {
+            @Override
+            public Request authenticate(Route route, Response response) throws IOException {
+                String credential = Credentials.basic(BuildConfig.REDDIT_CLIENT_ID, BuildConfig.REDDIT_PASS);
+                return response.request().newBuilder().header("Authorization", credential).build();
+            }
+        });
+        okHttpClient.cache(cache);
+        okHttpClient.addInterceptor(logging);
+
+        return okHttpClient.build();
     }
 
 

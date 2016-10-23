@@ -23,6 +23,7 @@ import com.recipe.roulette.app.helpers.ChangeFragmentHelper;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerCustomViewComponent;
 import com.recipe.roulette.app.injection.module.CustomViewModule;
+import com.recipe.roulette.app.injection.module.RedditModule;
 import com.recipe.roulette.app.presenter.CustomPresenter;
 import com.recipe.roulette.app.presenter.loader.PresenterFactory;
 import com.recipe.roulette.app.util.LogUtil;
@@ -45,6 +46,8 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
     SharedPreferences mSharedPreferences;
     @Inject
     RequestManager mGlide;
+    @Inject
+    RedditModule.RedditModuleApiInterface redditModuleApiInterface;
 
     @BindView(R.id.keyword_search_view)
     SearchView mSearchView;
@@ -112,8 +115,10 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
                 && mSearchView != null
                 && !TextUtils.isEmpty(mSearchView.getQuery())) {
             LogUtil.d(Constants.API_TAG, "MainFragment | search query = " + mSearchView.getQuery().toString());
-            mPresenter.search(mSearchView.getQuery().toString());
+            // mPresenter.search(mSearchView.getQuery().toString());
+            mPresenter.searchForRedditRecipes(mSearchView.getQuery().toString());
         }
+
     }
 
 
@@ -163,9 +168,9 @@ public final class MainFragment extends BaseFragment<CustomPresenter, CustomView
     public void onSearchResultsReady(int count) {
         LogUtil.d(Constants.API_TAG, "MainFragment | onSearchResultsReady() count = " + count);
         loading(false);
-        if (count == Constants.F2F_RESULTS_ERROR)
+        if (count == Constants.RESULTS_ERROR)
             ((MainActivity) getActivity()).showSnackbarNotification(getString(R.string.notification_hmm), Snackbar.LENGTH_SHORT);
-        else if (count == Constants.F2F_NO_RESULTS)
+        else if (count == Constants.NO_RESULTS)
             ((MainActivity) getActivity()).showSnackbarNotification(getString(R.string.notification_no_results), Snackbar.LENGTH_SHORT);
         else {
             if (mSwitch.isChecked())

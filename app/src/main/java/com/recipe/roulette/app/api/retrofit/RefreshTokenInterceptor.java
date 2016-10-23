@@ -25,10 +25,10 @@ import retrofit2.Call;
 public class RefreshTokenInterceptor implements Interceptor {
 
     @Inject
-    private SharedPreferences mSharedPreferences;
+    SharedPreferences mSharedPreferences;
 
     @Inject
-    private RedditModule.RedditOauthModuleApiInterface mRedditOauthModuleApiInterface;
+    RedditModule.RedditOauthModuleApiInterface mRedditOauthModuleApiInterface;
 
     public RefreshTokenInterceptor() {
         RecipeRouletteApplication.getAppComponent().inject(this);

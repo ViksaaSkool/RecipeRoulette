@@ -13,5 +13,6 @@
 
     <dimen name="card_radius">8dp</dimen>
     <dimen name="loading__size">64dp</dimen>
+    <dimen name="icon__size">48dp</dimen>
 
 </resources>

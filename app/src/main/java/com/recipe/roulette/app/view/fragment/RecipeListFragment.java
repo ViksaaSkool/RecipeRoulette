@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.recipe.roulette.app.R;
-import com.recipe.roulette.app.adapters.recycler.RecipeRecyclerViewAdapter;
-import com.recipe.roulette.app.api.Food2ForkApi;
+import com.recipe.roulette.app.adapters.recycler.RedditRecipeRecyclerViewAdapter;
+import com.recipe.roulette.app.api.RedditApi;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.injection.component.DaggerRecipeListViewComponent;
 import com.recipe.roulette.app.injection.module.RecipeListViewModule;
@@ -37,7 +37,7 @@ public class RecipeListFragment extends BaseFragment<RecipeListPresenter, Recipe
     PresenterFactory<RecipeListPresenter> mPresenterFactory;
 
     @Inject
-    Food2ForkApi mFood2ForkApi;
+    RedditApi mRedditApi;
 
     @BindView(R.id.recipes_recycler_view)
     RecyclerView mRecipesRecyclerView;
@@ -83,16 +83,17 @@ public class RecipeListFragment extends BaseFragment<RecipeListPresenter, Recipe
 
     public void setUI() {
 
-        if (mRecipesRecyclerView != null && mFood2ForkApi.getSearchResults() != null) {
+        if (mRecipesRecyclerView != null && mRedditApi.getRecipeItems() != null) {
             //set the list
-            RecipeRecyclerViewAdapter recipeRecyclerViewAdapter = new RecipeRecyclerViewAdapter(mFood2ForkApi.getSearchResults().getRecipes());
+
+            RedditRecipeRecyclerViewAdapter redditRecipeRecyclerViewAdapter = new RedditRecipeRecyclerViewAdapter(mRedditApi.getRecipeItems());
             mRecipesRecyclerView.setHasFixedSize(true);
             mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecipesRecyclerView.setItemAnimator(new SlideInUpAnimator());
-            mRecipesRecyclerView.setAdapter(recipeRecyclerViewAdapter);
+            mRecipesRecyclerView.setAdapter(redditRecipeRecyclerViewAdapter);
 
             //set the toolbar
-            int count = mFood2ForkApi.getSearchResults().getCount();
+            int count = mRedditApi.getRecipeItems().size();
             ((MainActivity) getActivity()).setToolbar(String.format(getString(R.string.title_search_results), count));
 
             //set back button

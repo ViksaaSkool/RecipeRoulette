@@ -21,6 +21,7 @@ public class RedditApiUtil {
     private static final String YOUTUBE = "youtube";
     private static final String GIF = ".gif";
     private static final String GIFV = ".gifv";
+    private static final String MP4 = ".mp4";
 
     public static String getUUID() {
         return UUID.randomUUID().toString();
@@ -40,6 +41,13 @@ public class RedditApiUtil {
         return getRecipeType(dataItem) != -1;
     }
 
+    public static String getProperUrlFormat(String url) {
+        if (url.contains(GIFV))
+            return url.replace(GIFV, GIF);
+        else
+            return url;
+    }
+
     public static RequestBody getReqestBodyForToken() {
         String bodyString = Constants.BODY_PARAMS_GET_TOKEN + RedditApiUtil.getUUID();
         RequestBody r = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"),
@@ -54,12 +62,17 @@ public class RedditApiUtil {
 
     public static void saveTokenSharedPreferences(SharedPreferences sharedPreferences, TokenResponse tokenResponse) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (tokenResponse.getAccessToken() != null)
-            editor.putString(Constants.ACCESS_TOKEN, tokenResponse.getAccessToken()).apply();
+        if (tokenResponse.getAccessToken() != null && tokenResponse.getTokenType() != null) {
+            String token = tokenResponse.getTokenType() + " " + tokenResponse.getAccessToken();
+            LogUtil.d(Constants.API_TAG, "saveTokenSharedPreferences() | token = " + token);
+            editor.putString(Constants.ACCESS_TOKEN, token).apply();
+        }
         if (tokenResponse.getExpiresIn() != null) {
-            Long expirationTime = System.currentTimeMillis() + Long.valueOf(tokenResponse.getExpiresIn());
+            Long expirationTime = System.currentTimeMillis() + Long.valueOf(tokenResponse.getExpiresIn()) * 1000;
             editor.putLong(Constants.TOKEN_EXPIRATION_TIME, expirationTime).apply();
         }
 
     }
+
+
 }

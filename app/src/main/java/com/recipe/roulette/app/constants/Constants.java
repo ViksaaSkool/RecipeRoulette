@@ -11,8 +11,8 @@ public class Constants {
     public static final String GET_RECIPE = "get";
     public static final String KEY_PARAM = "key";
     public static final String QUERY_PARAM = "q";
-    public static final int F2F_RESULTS_ERROR = -1;
-    public static final int F2F_NO_RESULTS = 0;
+    public static final int RESULTS_ERROR = -1;
+    public static final int NO_RESULTS = 0;
 
     //REDDIT API
     public static final String BASE_REDDIT_URL = "https://www.reddit.com/";
@@ -23,7 +23,7 @@ public class Constants {
     public static final String RESTRICT_PARAM = "restrict_sr";
     public static final String SORT_PARAM = "sort";
     public static final String SCOPE_PARAM = "t";
-    public static final String TITLE_SEARCH_VALUE = "title:";
+    public static final String QUERY_SEARCH_VALUE = "title:";
     public static final String RESTRICT_VALUE = "on";
     public static final String SORT_VALUE = "relevance";
     public static final String SCOPE_VALUE = "all";

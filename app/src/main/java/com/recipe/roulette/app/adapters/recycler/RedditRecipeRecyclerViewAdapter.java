@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -79,14 +80,16 @@ public class RedditRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Reddit
                         @Override
                         public void onClick(View v) {
                             holder.typeLayout.setClickable(false);
-                            holder.titleTextView.setText(R.string.text_loading_gif);
+                            holder.typeTextView.setText(R.string.text_loading_gif);
 
                             //load gif
-                            mGlide.load(recipe.getItemLink()).listener(new RequestListener<String, GlideDrawable>() {
+                            mGlide.load(recipe.getItemLink())
+                                    .listener(new RequestListener<String, GlideDrawable>() {
                                 @Override
                                 public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                    holder.titleTextView.setText(R.string.text_load_gif);
-                                    LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif load failed; message = " + e.getMessage());
+                                    holder.typeTextView.setText(R.string.text_load_gif);
+                                    if (e != null)
+                                        LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif load failed; message = " + e.getMessage());
                                     return true;
                                 }
 
@@ -96,7 +99,8 @@ public class RedditRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Reddit
                                     LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif loaded!");
                                     return true;
                                 }
-                            }).into(holder.recipeImageView);
+                            }).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .into(holder.recipeImageView);
                         }
                     });
                     break;
@@ -105,7 +109,7 @@ public class RedditRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Reddit
 
             //set image
             if (recipe.getThumbUrl() != null)
-                mGlide.load(recipe.getThumbUrl()).centerCrop().crossFade().into(holder.recipeImageView);
+              mGlide.load(recipe.getThumbUrl()).centerCrop().crossFade().into(holder.recipeImageView);
             else
                 LogUtil.d(Constants.ADPR_TAG, "RecipeRecyclerViewAdapter onBindViewHolder() | image url at recipe( " + position + " ) is null");
 

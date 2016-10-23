@@ -65,7 +65,7 @@ public class RedditRecipeResponse {
                     if (child.getData().getThumbnail() != null)
                         item.setThumbUrl(child.getData().getThumbnail());
                     if (child.getData().getUrl() != null)
-                        item.setItemLink(child.getData().getUrl());
+                        item.setItemLink(RedditApiUtil.getProperUrlFormat(child.getData().getUrl()));
                     if (child.getData().getTitle() != null)
                         item.setTitle(child.getData().getTitle());
                     if (child.getData().getLinkFlairText() != null)
