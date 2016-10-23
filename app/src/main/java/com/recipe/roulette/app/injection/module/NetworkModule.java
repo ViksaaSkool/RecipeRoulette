@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.recipe.roulette.app.BuildConfig;
 import com.recipe.roulette.app.RecipeRouletteApplication;
+import com.recipe.roulette.app.api.retrofit.TokenInterceptor;
 import com.recipe.roulette.app.constants.Constants;
 import com.recipe.roulette.app.util.LogUtil;
 
@@ -82,21 +83,14 @@ public final class NetworkModule {
     @Provides
     @Named("reddit")
     @Singleton
-    OkHttpClient provideOkHttpClient_r(Cache cache, final SharedPreferences sharedPreferences, HttpLoggingInterceptor logging) {
+    OkHttpClient provideOkHttpClient_r(Cache cache, HttpLoggingInterceptor logging) {
 
         OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder();
         okHttpClient.readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
         okHttpClient.connectTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
-        okHttpClient.authenticator(new Authenticator() {
-            @Override
-            public Request authenticate(Route route, Response response) throws IOException {
-                String token = sharedPreferences.getString(Constants.ACCESS_TOKEN, "");
-                LogUtil.d(Constants.API_TAG, "authenticate() | token = " + token);
-                return response.request().newBuilder().header("Authorization", "bearer oKdh8APnKu9LBB2aqOzOFmf5qjw"/*token*/).build();
-            }
-        });
         okHttpClient.cache(cache);
         okHttpClient.addInterceptor(logging);
+        okHttpClient.addInterceptor(new TokenInterceptor());
 
         return okHttpClient.build();
     }
@@ -109,7 +103,7 @@ public final class NetworkModule {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(Constants.BASE_REDDIT_URL/*Constants.BASE_OAUTH_REDDIT_URL*/)
+                .baseUrl(Constants.BASE_OAUTH_REDDIT_URL)
                 .client(okHttpClient)
                 .build();
     }
@@ -118,7 +112,7 @@ public final class NetworkModule {
     @Provides
     @Named("reddit_oauth")
     @Singleton
-    OkHttpClient provideOkHttpClient_ro(Cache cache, HttpLoggingInterceptor logging) {
+    OkHttpClient provideOkHttpClient_ro(Cache cache) {
 
         OkHttpClient.Builder okHttpClient = new OkHttpClient().newBuilder();
         okHttpClient.readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS);
@@ -131,7 +125,6 @@ public final class NetworkModule {
             }
         });
         okHttpClient.cache(cache);
-        okHttpClient.addInterceptor(logging);
 
         return okHttpClient.build();
     }

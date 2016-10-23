@@ -38,19 +38,23 @@ public class RefreshTokenInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
+        String token = mSharedPreferences.getString(Constants.ACCESS_TOKEN, "");
+        LogUtil.d(Constants.API_TAG, "authenticate() | token = " + token);
+
         // try the request
         Response response = chain.proceed(request);
+        response.request().newBuilder().header("Authorization", token).build();
 
         if (!response.isSuccessful()) {
             LogUtil.d(Constants.API_TAG, "RefreshTokenInterceptor intercept()| Token needs to be refreshed!");
 
             // get a new token (I use a synchronous Retrofit call)
             Call<TokenResponse> tokenCall = mRedditOauthModuleApiInterface.refreshToken(RedditApiUtil.getReqestBodyForToken());
-            TokenResponse token = tokenCall.execute().body();
-            RedditApiUtil.saveTokenSharedPreferences(mSharedPreferences, token);
+            TokenResponse tokenResponse = tokenCall.execute().body();
+            RedditApiUtil.saveTokenSharedPreferences(mSharedPreferences, tokenResponse);
 
             // create a new request and modify it accordingly using the new token
-            Request newRequest = request.newBuilder().header("Authorization", token.getAccessToken()).build();
+            Request newRequest = request.newBuilder().header("Authorization", tokenResponse.getAccessToken()).build();
 
             // retry the request
             return chain.proceed(newRequest);

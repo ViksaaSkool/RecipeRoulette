@@ -8,6 +8,7 @@ import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.api.Food2ForkApi;
 import com.recipe.roulette.app.api.RedditApi;
 import com.recipe.roulette.app.api.retrofit.RefreshTokenInterceptor;
+import com.recipe.roulette.app.api.retrofit.TokenInterceptor;
 import com.recipe.roulette.app.injection.module.AppModule;
 import com.recipe.roulette.app.injection.module.Food2ForkAPIModule;
 import com.recipe.roulette.app.injection.module.NetworkModule;
@@ -49,4 +50,6 @@ public interface AppComponent {
     void inject(RefreshTokenInterceptor refreshTokenInterceptor);
 
     void inject(BaseInteractiorImpl baseInteractorImpl);
+
+    void inject(TokenInterceptor tokenInterceptor);
 }
