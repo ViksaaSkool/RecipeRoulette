@@ -32,6 +32,10 @@
             android:name=".view.activity.MainActivity"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".view.activity.DetailsActivity"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+
         <!-- use GCMNetworkManager. for N+ versions -->
         <receiver android:name=".receivers.NetworkStateReceiver">
             <intent-filter>
