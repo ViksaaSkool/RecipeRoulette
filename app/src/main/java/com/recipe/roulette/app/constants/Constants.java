@@ -37,7 +37,6 @@ public class Constants {
     public static final int GIF = 2;
     public static final int READ_TIMEOUT = 60;
     public static final int CONNECT_TIMEOUT = 60;
-    //https://www.reddit.com/r/recipegifs/search.json?q=title%3Aapple&restrict_sr=on&sort=relevance&t=all
 
     //LOG TAGS
     public static final String API_TAG = "APITAG";
@@ -51,6 +50,7 @@ public class Constants {
     public static final String ACCESS_TOKEN = "access_token_key";
     public static final String REFRESH_TOKEN = "refresh_token_key";
     public static final String TOKEN_EXPIRATION_TIME = "token_expiration_time_key";
+    public static final String GIF_VIDEO_URL_KEY = "gif_video_url_key";
 
     //VALUES
     public static final boolean LIST_VIEW = true;
@@ -59,4 +59,7 @@ public class Constants {
     //UI
     public static final String SWIPE_CARD_INDEX_KEY = "swipe_card_index_key";
     public static final String COUNT_KEY = "count_key";
+    public static final int BLUR_RATE_SWIPE = 16;
+    public static final int BLUR_RATE_LIST = 8;
+
 }

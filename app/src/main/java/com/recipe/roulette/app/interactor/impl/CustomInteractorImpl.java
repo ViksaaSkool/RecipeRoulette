@@ -7,7 +7,9 @@ import com.recipe.roulette.app.model.reddit.RedditRecipeResponse;
 import com.recipe.roulette.app.util.LogUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -71,6 +73,10 @@ public final class CustomInteractorImpl extends BaseInteractiorImpl implements C
                                 + "\n gifRecipes size = " + redditRecipeResponse1.getRedditRecipeItems().size()
                                 + "\n videoRecipes size = " + redditRecipeResponse2.getRedditRecipeItems().size()
                                 + "\n recipesGif size = " + redditRecipeResponse3.getRedditRecipeItems().size());
+
+                        //randomize results
+                        long seed = System.nanoTime();
+                        Collections.shuffle(recipeItems, new Random(seed));
 
                         return recipeItems;
                     }

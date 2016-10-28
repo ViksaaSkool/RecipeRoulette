@@ -11,23 +11,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.api.RedditApi;
 import com.recipe.roulette.app.constants.Constants;
+import com.recipe.roulette.app.helpers.ChangeActivityHelper;
 import com.recipe.roulette.app.model.reddit.RedditRecipeItem;
-import com.recipe.roulette.app.util.LogUtil;
 import com.recipe.roulette.app.util.ShareUtil;
+import com.recipe.roulette.app.view.activity.DetailsActivity;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * Created by varsovski on 08-Oct-16.
@@ -96,78 +94,54 @@ public class GenericSwipeCardFragment extends Fragment {
                 && mRecipe != null) {
 
             //load image
-            mGlide.load(mRecipe.getThumbUrl()).centerCrop().crossFade().into(mRecipeImageView);
+            mGlide.load(mRecipe.getThumbUrl())
+                    .crossFade()
+                    .bitmapTransform(new BlurTransformation(getActivity(), Constants.BLUR_RATE_SWIPE))
+                    .centerCrop()
+                    .into(mRecipeImageView);
 
-            if (mRecipe.getType() == Constants.GIF)
+            if (mRecipe.getType() == Constants.GIF){
                 mGlide.load(R.drawable.gif_file).into(mTypeImageView);
-            else
+                mTypeTextView.setText(R.string.text_load_gif);
+            }
+
+            else{
                 mGlide.load(R.drawable.video_file).into(mTypeImageView);
+                mTypeTextView.setText(R.string.text_play_video);
+            }
 
             //set text
             mTitleTextView.setText(mRecipe.getTitle());
             mSourceTextView.setText(mRecipe.getLinkFlairText());
 
-            mTypeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mRecipe.getType() == Constants.GIF)
-                        mGlide.load(mRecipe.getItemLink()).listener(new RequestListener<String, GlideDrawable>() {
-                            @Override
-                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                mTypeTextView.setText(R.string.text_load_gif);
-                                if (e != null)
-                                    LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif load failed; message = " + e.getMessage());
-                                return true;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                mTypeLayout.setVisibility(View.GONE);
-                                LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif loaded!");
-                                return true;
-                            }
-                        }).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(mRecipeImageView);
-                    else
-                        ShareUtil.openLink(mRecipe.getItemLink());
-                }
-            });
+            //because it looks better
+            mTypeLayout.setVisibility(View.GONE);
         }
     }
 
     @OnClick({R.id.recipe_imageview, R.id.source_text_view, R.id.share_image_view, R.id.type_layout})
     public void onClick(View view) {
+        String url = mRecipe.getItemLink();
+        Bundle b = new Bundle();
+        b.putString(Constants.GIF_VIDEO_URL_KEY, url);
         switch (view.getId()) {
             case R.id.recipe_imageview:
-             //   ShareUtil.openLink(mRecipe.getItemLink());
+                if (mRecipe.getType() == Constants.GIF)
+                    ChangeActivityHelper.changeActivityExtra(getActivity(), DetailsActivity.class, b, false);
+                else
+                    ShareUtil.openLink(url);
                 break;
             case R.id.source_text_view:
-                ShareUtil.openLink(mRecipe.getItemLink());
+                ShareUtil.openLink(url);
                 break;
             case R.id.share_image_view:
-                ShareUtil.shareRecipe(getActivity(), mRecipe.getItemLink());
+                ShareUtil.shareRecipe(getActivity(), url);
                 break;
             case R.id.type_layout:
                 if (mRecipe.getType() == Constants.GIF)
-                    mGlide.load(mRecipe.getItemLink()).listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            mTypeTextView.setText(R.string.text_load_gif);
-                            if (e != null)
-                                LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif load failed; message = " + e.getMessage());
-                            return true;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            mTypeLayout.setVisibility(View.GONE);
-                            LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif loaded!");
-                            return true;
-                        }
-                    }).diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .into(mRecipeImageView);
+                    ChangeActivityHelper.changeActivityExtra(getActivity(), DetailsActivity.class, b, false);
                 else
-                    ShareUtil.openLink(mRecipe.getItemLink());
+                    ShareUtil.openLink(url);
                 break;
         }
     }

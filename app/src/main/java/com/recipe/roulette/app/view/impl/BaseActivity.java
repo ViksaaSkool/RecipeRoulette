@@ -165,4 +165,17 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
     public P getPresenter() {
         return mPresenter;
     }
+
+    public <T> T getExtras(String name) {
+        T result = null;
+        Bundle extras = this.getIntent().getExtras();
+
+        if (extras != null) {
+            try {
+                result = (T) extras.get(name);
+            } finally {
+            }
+        }
+        return result;
+    }
 }

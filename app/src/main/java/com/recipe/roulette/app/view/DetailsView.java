@@ -8,4 +8,8 @@ import android.support.annotation.UiThread;
 
 @UiThread
 public interface DetailsView {
+
+    void loadGifVideo();
+
+    void loading(boolean showLoading);
 }

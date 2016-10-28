@@ -1,5 +1,6 @@
 package com.recipe.roulette.app.adapters.recycler;
 
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,17 +13,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.recipe.roulette.app.R;
 import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.constants.Constants;
+import com.recipe.roulette.app.helpers.ChangeActivityHelper;
 import com.recipe.roulette.app.model.reddit.RedditRecipeItem;
 import com.recipe.roulette.app.util.LogUtil;
 import com.recipe.roulette.app.util.ShareUtil;
 import com.recipe.roulette.app.util.UIUtil;
+import com.recipe.roulette.app.view.activity.DetailsActivity;
 
 import java.util.List;
 
@@ -80,28 +79,11 @@ public class RedditRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Reddit
                     holder.typeLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            holder.typeLayout.setClickable(false);
-                            holder.typeTextView.setText(R.string.text_loading_gif);
 
-                            //load gif
-                            mGlide.load(recipe.getItemLink())
-                                    .listener(new RequestListener<String, GlideDrawable>() {
-                                        @Override
-                                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                            holder.typeTextView.setText(R.string.text_load_gif);
-                                            if (e != null)
-                                                LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif load failed; message = " + e.getMessage());
-                                            return true;
-                                        }
-
-                                        @Override
-                                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                            holder.typeLayout.setVisibility(View.GONE);
-                                            LogUtil.d(Constants.ADPR_TAG, "RequestListener<String, GlideDrawable>() | gif loaded!");
-                                            return true;
-                                        }
-                                    }).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                    .into(holder.recipeImageView);
+                            String url = recipe.getItemLink();
+                            Bundle b = new Bundle();
+                            b.putString(Constants.GIF_VIDEO_URL_KEY, url);
+                            ChangeActivityHelper.changeActivityExtra((AppCompatActivity) holder.typeLayout.getContext(), DetailsActivity.class, b, false);
                         }
                     });
                     break;
@@ -112,7 +94,7 @@ public class RedditRecipeRecyclerViewAdapter extends RecyclerView.Adapter<Reddit
             if (recipe.getThumbUrl() != null)
                 mGlide.load(recipe.getThumbUrl())
                         .crossFade()
-                        .bitmapTransform(new BlurTransformation(holder.recipeImageView.getContext(), 3))
+                        .bitmapTransform(new BlurTransformation(holder.recipeImageView.getContext(), Constants.BLUR_RATE_LIST))
                         .centerCrop()
                         .into(holder.recipeImageView);
             else

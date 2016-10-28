@@ -43,7 +43,7 @@ public class RedditApiUtil {
 
     public static String getProperUrlFormat(String url) {
         if (url.contains(GIFV))
-            return url.replace(GIFV, GIF);
+            return url.replace(GIFV, MP4);
         else
             return url;
     }
