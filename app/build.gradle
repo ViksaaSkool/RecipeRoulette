@@ -166,8 +166,7 @@ dependencies {
         transitive = true;
     }
 
-    /* Parceler */
-    compile 'org.parceler:parceler-api:1.1.1'
-    apt 'org.parceler:parceler:1.1.1'
+    /* ReactiveNetwork */
+    compile 'com.github.pwittchen:reactivenetwork:0.6.0'
 
 }

@@ -7,20 +7,21 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork;
 import com.recipe.roulette.app.RecipeRouletteApplication;
 import com.recipe.roulette.app.constants.Constants;
-import com.recipe.roulette.app.events.InternetConnectionEvent;
 import com.recipe.roulette.app.injection.component.AppComponent;
 import com.recipe.roulette.app.presenter.BasePresenter;
 import com.recipe.roulette.app.presenter.loader.PresenterFactory;
 import com.recipe.roulette.app.presenter.loader.PresenterLoader;
 import com.recipe.roulette.app.util.LogUtil;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCompatActivity implements LoaderManager.LoaderCallbacks<P> {
     /**
@@ -75,7 +76,18 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
     protected void onStart() {
         super.onStart();
 
-        EventBus.getDefault().register(this);
+        //check for Internet connectivity
+        ReactiveNetwork.observeInternetConnectivity()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                    @Override public void call(Boolean isConnectedToInternet) {
+                        LogUtil.d(Constants.APP_TAG, "Connection change! isConnected == " + isConnectedToInternet);
+                        onConnectionChange(isConnectedToInternet);
+                    }
+                });
+
+
         if (mPresenter == null) {
             mNeedToCallStart.set(true);
         } else {
@@ -104,8 +116,6 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
 
             mPresenter.onViewDetached();
         }
-
-        EventBus.getDefault().unregister(this);
         super.onStop();
     }
 
@@ -150,13 +160,6 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V> extends AppCom
      * @param appComponent the app component
      */
     protected abstract void setupComponent(@NonNull AppComponent appComponent);
-
-
-    @Subscribe
-    public void handleConnectionChange(InternetConnectionEvent connectionEvent) {
-        LogUtil.d(Constants.APP_TAG, "Connection change! isConnected == " + connectionEvent.isConnected());
-        onConnectionChange(connectionEvent.isConnected());
-    }
 
     public abstract void onConnectionChange(boolean isConnected);
 
