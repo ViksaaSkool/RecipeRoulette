@@ -7,14 +7,20 @@ Main goal of the Recipe Roulette app is to provide the user with quick recipe pr
 
 Here's how the app looks in action:
 
+There are 2 branches of the application that tackle the challenge using different approaches
+
+1. [develop_mvp](http://bit.ly/2dzThKu) - Dagger2, MVP, Retrofit 2, Butterknife and EventBus (greenrobot)
+
 <img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/preview_1.gif" width="280" height="500"/>
 <img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/preview_2.gif" width="280" height="500"/>
 <img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/preview_3.gif" width="280" height="500"/>
 
-There are 2 branches of the application that tackle the challenge using different approaches:
 
-1. [develop_mvp](http://bit.ly/2dzThKu) - Dagger2, MVP, Retrofit 2, Butterknife and EventBus (greenrobot)
-2. [develop_mvp_rxjava2](http://bit.ly/2dWKy3f) - Dagger2, MVP, Retrofit 2, Butterknife and RxJava2
+
+2. [develop_mvp_rxjava](http://bit.ly/2dWKy3f) - Dagger2, MVP, Retrofit 2, Butterknife and RxJava
+<img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/preview_1.gif" width="280" height="500"/>
+<img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/preview_rx_2.gif" width="280" height="500"/>
+<img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/preview_rx_3.gif" width="280" height="500"/>
 
 
 #MVP
