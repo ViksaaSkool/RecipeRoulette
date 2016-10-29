@@ -18,6 +18,7 @@ There are 2 branches of the application that tackle the challenge using differen
 
 
 2. [develop_mvp_rxjava](http://bit.ly/2dWKy3f) - Dagger2, MVP, Retrofit 2, Butterknife and RxJava
+
 <img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/preview_1.gif" width="280" height="500"/>
 <img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/preview_rx_2.gif" width="280" height="500"/>
 <img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/preview_rx_3.gif" width="280" height="500"/>
