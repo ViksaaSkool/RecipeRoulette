@@ -3,7 +3,7 @@
 
 <img src="https://github.com/ViksaaSkool/RecipeRoulette/blob/master/art/logo.png" width="126" height="126"/>
 
-Main goal of the Recipe Roulette app is to provide the user with quick recipe provided that the users enters keyword. It has simple and intuitive UI and it serves the purpose of displaying the MVP principles as well as the use of EventBus, Dagger 2, RxJava 2 (work in progress). In the process it utilizes [food2fork API](http://bit.ly/2dWKwIj) and [reddit API](http://bit.ly/2dWKBvJ).
+Main goal of the Recipe Roulette app is to present the user with quick recipe(s), provided that the user enters keyword. It has simple and intuitive UI and it serves the purpose of displaying the MVP principles as well as the use of EventBus, Dagger 2, RxJava 2 (work in progress). In the process it utilizes [food2fork API](http://bit.ly/2dWKwIj) and [reddit API](http://bit.ly/2dWKBvJ).
 
 Here's how the app looks in action:
 
